@@ -3,15 +3,39 @@
 import { Socials } from "@/constants";
 import Image from "next/image";
 import React from "react";
+import Footer from "./Footer";
 
-const Navbar = () => {
-    return (
-      <div className="w-full h-[65px] fixed top-0 shadow-lg shadow-orange-500/50 bg-black/30 backdrop-blur-md z-50 px-10">
-        <div className="w-full h-full flex flex-row items-center justify-between m-auto px-[10px]">
-          <a
-            href="#about-me"
-            className="h-auto w-auto flex flex-row items-center"
-          >
+import { Menu } from '@headlessui/react';
+import Link from "next/link";
+
+const Navbar = ({ children }: { children: React.ReactNode }) => {
+  const navigation = [
+    {
+      name: "Universe",
+      path: "/universe",
+      current: true,
+    },
+    {
+      name: "Stars",
+      path: "/universe/stars",
+      current: false,
+    },
+    {
+      name: "Planets",
+      path: "/universe/planets",
+      current: false,
+    },
+  ];
+
+  function classNames(...classes: string[]): string {
+    return classes.filter(Boolean).join(" ");
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <div className="w-full h-[65px] fixed top-0 left-0 z-50 px-10 shadow-lg shadow-orange-600/50 bg-black/30 backdrop-blur-md">
+        <div className="flex h-full items-center justify-between px-[10px] mx-auto max-w-screen-xl">
+          <a href="/universe" className="flex items-center">
             <Image
               src="/RK.png"
               alt="logo"
@@ -19,25 +43,27 @@ const Navbar = () => {
               height={70}
               className="cursor-pointer hover:animate-slowspin"
             />
-
-            <span className="font-bold ml-[10px] hidden md:block text-gray-300">
-              Haariharan Rajakumar
-            </span>
           </a>
 
-          <div className="w-[500px] h-full flex flex-row items-center justify-between md:mr-20">
-            <div className="flex items-center justify-between w-full text-gray-200">
-              <a href="#about-me" className="cursor-pointer hover:scale-110 transition-all ease-in-out">
-                Universe
-              </a>
-              <a href="#skills" className="cursor-pointer hover:scale-110 transition-all ease-in-out">
-                Stars
-              </a>
-              <a href="#projects" className="cursor-pointer hover:scale-110 transition-all ease-in-out">
-                Planets
-              </a>
-            </div>
-          </div>
+          <nav className="flex justify-center">
+            <ul className="flex flex-row gap-x-5 items-center">
+              {navigation.map((item) => (
+                <li key={item.name} className="list-none">
+                  <Link
+                    href={item.path}
+                    className={classNames(
+                      item.current
+                        ? "bg-gray-800 text-white"
+                        : "text-white hover:text-white hover:underline",
+                      "group flex gap-x-3 rounded-md p-2 text-sm font-semibold"
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           <div className="flex flex-row gap-5">
             {Socials.map((social) => (
@@ -54,7 +80,10 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    );
+      <main className="pt-[85px] flex-1 w-full">{children}</main>
+    </div>
+  );
 };
+
 
 export default Navbar;

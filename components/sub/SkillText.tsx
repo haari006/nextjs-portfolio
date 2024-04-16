@@ -33,3 +33,64 @@ const SkillText = () => {
 }
 
 export default SkillText
+
+
+export const SkillTitleText = () => {
+    return (
+        <div className='w-full h-auto flex flex-col items-center justify-center mb-8'>
+                <motion.div
+                    variants={slideInFromLeft(0.5)}
+                    className="flex flex-col gap-6 text-6xl font-bold text-white max-w-[600px] w-auto h-auto"
+                >
+                  <span>
+                    Accquired
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
+                      {" "}
+                      Skills{" "}
+                    </span>
+                  </span>
+                </motion.div>
+                </div>
+    );
+}
+
+
+export const  BackendSkillText = () => {
+    return (
+        <div>
+            <motion.div
+                variants={slideInFromLeft(0.5)}
+                className='text-[30px] text-white font-medium mt-[10px] text-center mb-[15px]'
+            >
+                Backend Frameworks
+            </motion.div>
+        </div>
+    )
+}
+
+
+export const FrontentSkillText = () => {
+    return (
+        <div>
+            <motion.div
+                variants={slideInFromLeft(0.5)}
+                className='text-[30px] text-white font-medium mt-[10px] text-center mb-[15px]'
+            >
+                Frontend Frameworks
+            </motion.div>
+        </div>
+    )
+}
+
+export const  DevOpsSkillText = () => {
+    return (
+        <div>
+            <motion.div
+                variants={slideInFromLeft(0.5)}
+                className='text-[30px] text-white font-medium mt-[10px] text-center mb-[15px]'
+            >
+                DevOps Technologies
+            </motion.div>
+        </div>
+    )
+}
