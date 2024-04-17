@@ -30,6 +30,7 @@ const Stars = () => {
                 width={image.width}
                 height={image.height}
                 index={index}
+                name={image.skill_name}
               />
             ))}
           </div>
@@ -45,6 +46,7 @@ const Stars = () => {
                 width={image.width}
                 height={image.height}
                 index={index}
+                name={image.skill_name}
               />
             ))}
           </div>
@@ -60,6 +62,7 @@ const Stars = () => {
                 width={image.width}
                 height={image.height}
                 index={index}
+                name={image.skill_name}
               />
             ))}
           </div>

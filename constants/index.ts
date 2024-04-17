@@ -276,3 +276,71 @@ export const AI_skill = [
         height: 60,
     }
 ]
+
+export const Planets: Planet[] = [
+    {
+        id: "pystorm-saas",
+        name: "Pystorm Saas App",
+        link: 'https://pystorm.com',
+        remark: "I worked on this project as a full stack developer. I was responsible for the frontend and backend of the project. I was also responsible for the design and architecture of the project. This project was made for the Start-Up company Pydantic Sdn Bhd.",
+        description: "Pystorm is a SaaS app which offers a user-friendly platform tailored for small businesses to simplify data management and visualization. It offers custom dashboards, over 50 ready-to-use dashboard templates, and Excel download options, all with secure data encryption. Users can combine Excel data into one dashboard, get priority customer support, and export PDF reports. The site makes it easy to turn spreadsheets into dynamic business dashboards, leveraging Excel for easy data management and visualization.",
+        images: [
+            {
+                src: "/pystorm1.webp",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/pystorm2.webp",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/pystorm3.webp",
+                width: 100,
+                height: 100,
+            },
+        ],
+        frameworks: [
+            {
+                name: "React Js",
+                Image: "/react.png",
+                width: 80,
+                height: 80,
+            },
+            {
+                name: "Express js",
+                Image: "/express.png",
+                width: 80,
+                height: 80,
+            },
+            {
+                name: 'Firebase',
+                Image: "/Firebase.png",
+                width: 55,
+                height: 55,
+            },
+            {
+                name: "Stripe",
+                Image: "/stripe.svg",
+                width: 70,
+                height: 70,
+            }
+
+        ],
+        cloud: [
+            {
+                name: "Vercel",
+                Image: "/vercel.svg",
+                width: 70,
+                height: 70,
+            },
+            {
+                name: "Azure Container",
+                Image: "/microsoft_azure-icon.svg",
+                width: 50,
+                height: 50,
+            },
+        ],
+    }
+]
