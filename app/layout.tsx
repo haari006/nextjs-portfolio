@@ -40,7 +40,7 @@ export default function RootLayout({
       )}
     >
       {" "}
-      <body className="flex h-full flex-col">
+      <body className="flex h-full ">
         <StarsCanvas />
         {children}
       </body>

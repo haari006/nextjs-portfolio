@@ -82,19 +82,14 @@ export const Skill_data = [
 
 export const Socials = [
     {
-        name: "Instagram",
-        src: "/instagram.svg",
-        link: "https://www.instagram.com/nikhil_maguwala/",
-    },
-    {
         name: "Github",
-        src: "/github_white.jpg",
-        link: "https://github.com/nikhilmaguwala",
+        src: "/github.png",
+        link: "https://github.com/haari006",
     },
     {
         name: "Linkedin",
         src: "/linkedin.svg",
-        link: "https://www.linkedin.com/in/nikhil-maguwala/",
+        link: "https://www.linkedin.com/in/haariharanr/",
     },
 ];
 
@@ -342,5 +337,105 @@ export const Planets: Planet[] = [
                 height: 50,
             },
         ],
+    },
+    {
+        id: "pystorm-dashboard",
+        name: "Pystorm Project Based Dashboard",
+        link: 'https://pystorm.com',
+        remark: "I worked on this project as a frontend developer. Initially, it was developed using React-vite, but it has since been rebuilt using Next.js 14, eliminating the need for a separate backend. This project was created for the startup company, Pydantic Sdn Bhd.",
+        description: "This is a web app that supports multi-tenancy, allowing users to view embedded dashboards. It was developed for SME organizations to visualize their data and assign dashboards to their members. The web app also features role-based access control to manage users and permissions.",
+        images: [
+            {
+                src: "/pystorm-dashboard1.jpeg",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/pystorm-dashboard2.jpeg",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/pystorm-dashboard3.jpeg",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/pystorm-dashboard4.jpeg",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/pystorm-dashboard5.jpeg",
+                width: 100,
+                height: 100,
+            },
+        ],
+        frameworks: [
+            {
+                name: "NextJS 14",
+                Image: "/next.png",
+                width: 80,
+                height: 80,
+            },
+            {
+                name: 'Firebase',
+                Image: "/Firebase.png",
+                width: 55,
+                height: 55,
+            },
+            {
+                name: "Google Cloud Platform",
+                Image: "/google_cloud.svg",
+                width: 70,
+                height: 70,
+            }
+
+        ],
+        cloud: [
+            {
+                name: "Vercel",
+                Image: "/vercel.svg",
+                width: 70,
+                height: 70,
+            },
+        ],
     }
-]
+];
+
+
+export const jobs = [
+    {
+      id: 1,
+      company: "Pydantic Sdn Bhd (Pystorm)",
+      designation: "Junior Web Developer",
+      logo: {
+        url: "https://wzpgifvdurjfzxzadalr.supabase.co/storage/v1/object/public/pystorm-client/pystorm-logo.png"
+      },
+      from: "2023-03-21", 
+      to: null 
+    },
+  ];
+
+  export const education = [
+    {
+      id: 1,
+      company: "Ungku Omar Polytechnic",
+      designation: "Diploma of Digital Technology in Computer Security ",
+      logo: {
+        url: "https://media.licdn.com/dms/image/C510BAQGN0Dub_nSGrQ/company-logo_100_100/0/1630625830981?e=1721260800&v=beta&t=2AzvDJBOljIZJroyivBHLP_agu1X5aPzHmL3wr0PauE",
+      },
+      from: "2017-10-05",
+      to: "2020-03-21", 
+    },
+    {
+      id: 2,
+      company: "Universiti Teknikal Malaysia Melaka",
+      designation: "Bachelor of Computer Science (Computer Security)",
+      logo: {
+        url: "https://media.licdn.com/dms/image/D560BAQEdbs-tNx86Jg/company-logo_100_100/0/1710984034181/universiti_teknikal_malaysia_melaka_logo?e=1721260800&v=beta&t=hPTkAulqg8EHBtFaUcBVZe4OZBOclw-G2JpNAD5bjws",
+      },
+      from: "2020-10-15",
+      to: "2023-06-21", 
+    },
+  ];

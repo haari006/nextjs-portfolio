@@ -54,6 +54,25 @@ export const SkillTitleText = () => {
     );
 }
 
+export const PlanetTitleText = () => {
+    return (
+        <div className='w-full h-auto flex flex-col items-center justify-center mb-8 glass-effect bg-orange-200/10 backdrop-blur-lg rounded-lg p-8 shadow-lg'>
+                <motion.div
+                    variants={slideInFromLeft(0.5)}
+                    className="flex flex-col gap-6 text-6xl font-bold text-white max-w-[600px] w-auto h-auto"
+                >
+                  <span>
+                    My
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
+                      {" "}
+                      Planets{" "}
+                    </span>
+                  </span>
+                </motion.div>
+                </div>
+    );
+}
+
 
 export const  BackendSkillText = () => {
     return (

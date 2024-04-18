@@ -9,7 +9,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
           autoPlay
           muted
           loop
-          className="rotate-180 absolute md:top-[-220px] xl:top-[-380px] h-full w-full left-0 z-10 object-cover interstellar-effect"
+          className="rotate-180 absolute md:top-[-230px] xl:top-[-390px] h-full w-full left-0 z-10 object-cover interstellar-effect"
         >
           <source src="/blackhole.webm" type="video/webm" />
         </video>
