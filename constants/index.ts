@@ -341,9 +341,9 @@ export const Planets: Planet[] = [
     {
         id: "pystorm-dashboard",
         name: "Pystorm Project Based Dashboard",
-        link: 'https://pystorm.com',
+        link: 'https://demo.pystorm.info',
         remark: "I worked on this project as a frontend developer. Initially, it was developed using React-vite, but it has since been rebuilt using Next.js 14, eliminating the need for a separate backend. This project was created for the startup company, Pydantic Sdn Bhd.",
-        description: "This is a web app that supports multi-tenancy, allowing users to view embedded dashboards. It was developed for SME organizations to visualize their data and assign dashboards to their members. The web app also features role-based access control to manage users and permissions.",
+        description: "This is a web app that supports multi-tenancy, allowing users to view embedded dashboards. It was developed for SME organizations to visualize their data and assign dashboards to their members. The web app also features role-based access control to manage users and permissions. This web app can only be accessed by registered users.",
         images: [
             {
                 src: "/pystorm-dashboard1.jpeg",
