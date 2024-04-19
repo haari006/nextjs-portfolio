@@ -1,5 +1,11 @@
 import ProjectCard from "@/components/sub/ProjectCard";
 import { PlanetTitleText } from "@/components/sub/SkillText";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "My Projects",
+    description: "List of projects by Haariharan Rajakumar",
+  };
 
 export default function PlanetsPage() {
   return (
