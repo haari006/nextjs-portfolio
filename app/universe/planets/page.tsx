@@ -10,13 +10,13 @@ export default function PlanetsPage() {
           <ProjectCard
             src="/pystorm1.webp"
             title="Pystorm SaaS App"
-            description="3D Portfolio Website made with React, Vite, Three JS, and TailwindCSS."
+            description="Pystorm is a SaaS app which offers a user-friendly platform tailored for small businesses to simplify data management and visualization."
             link="planets/pystorm-saas"
           />
           <ProjectCard
             src="/pystorm-dashboard3.jpeg"
             title="Pystorm Dashboard"
-            description="Stock Price Prediction with LSTM is a machine learning project that uses LSTM, a type of recurrent neural network, to predict stock prices."
+            description="A web app that supports multi-tenancy, allowing users to view embedded dashboards that was made to visualize organization data"
             link="planets/pystorm-dashboard"
           />
         </div>
