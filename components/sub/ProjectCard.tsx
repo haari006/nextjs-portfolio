@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 interface Props {
   src: string;
