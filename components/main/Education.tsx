@@ -32,32 +32,36 @@ export const List = ({ data }: { data: any }) => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-gray-100 p-4 rounded-md hover:bg-opacity-80 transition duration-300"
+              className="group bg-white bg-opacity-10 border-white p-4 rounded-md hover:bg-opacity-80 border border-gray-200/10 transition duration-300"
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 className="text-lg font-semibold">{d?.company}</h2>
-                  <h3 className="text-gray-600">{d?.designation}</h3>
+                  <h2 className="text-lg text-white font-semibold group-hover:text-gray-900">
+                    {d?.company}
+                  </h2>
+                  <h3 className="text-gray-200 group-hover:text-gray-900">
+                    {d?.designation}
+                  </h3>
                 </div>
                 {d?.logo?.url && (
                   <img
                     src={d?.logo?.url}
-                    alt=""
+                    alt={`${d?.company} logo`}
                     className="h-8 mt-1 opacity-100 hover:opacity-50 transition duration-300"
                   />
                 )}
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-500">
+                <span className="text-gray-500 group-hover:text-gray-600">
                   {`${Months[parseInt(d?.from?.split("-")[1])]}, ${
                     d?.from?.split("-")[0]
                   }`}
                 </span>
-                <span className="text-gray-500">
+                <span className="text-gray-500 group-hover:text-gray-600">
                   {`${Months[parseInt(d?.from?.split("-")[1])]}, ${
                     d?.from?.split("-")[0]
                   }`}{" "}
-                  -{" "}
+                  -
                   {d?.to
                     ? `${Months[parseInt(d?.to?.split("-")[1])]}, ${
                         d?.to?.split("-")[0]
