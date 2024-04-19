@@ -32,7 +32,7 @@ export const List = ({ data }: { data: any }) => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="group bg-white bg-opacity-10 border-white p-4 rounded-md hover:bg-opacity-80 border border-gray-200/10 transition duration-300"
+              className="group bg-white bg-opacity-10 border-white p-4 rounded-md hover:bg-opacity-80 transition duration-300"
             >
               <div className="flex items-start justify-between">
                 <div>
