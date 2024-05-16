@@ -25,6 +25,12 @@ export default function PlanetsPage() {
             description="A web app that supports multi-tenancy, allowing users to view embedded dashboards that was made to visualize organization data"
             link="planets/pystorm-dashboard"
           />
+          <ProjectCard
+            src="/nextjslms-1.png"
+            title="Learning Management System"
+            description="A learning management system prototype where user can do course enrollment"
+            link="planets/nextjs-lms"
+          />
         </div>
       </div>
     </div>
