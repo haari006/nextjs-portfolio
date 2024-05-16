@@ -404,7 +404,7 @@ export const Planets: Planet[] = [
     {
         id: "nextjs-lms",
         name: "Learning Management System",
-        link: 'nextjs-lms-seven.vercel.app',
+        link: 'https://nextjs-lms-seven.vercel.app',
         remark: "My personal project, i build this project to learn Next.js 14 and to build my portfolio.",
         description: "A sample prototype of Learning management System that i build in few days. User can enroll and unenroll for now and most of the data are dummy. Built just for fun and find the repository in my github.",
         images: [
