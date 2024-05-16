@@ -3,7 +3,6 @@
 import { Socials } from "@/constants";
 import Image from "next/image";
 import React, { useState } from "react";
-import Footer from "./Footer";
 
 import { Menu } from '@headlessui/react';
 import Link from "next/link";
