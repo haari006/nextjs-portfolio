@@ -400,7 +400,64 @@ export const Planets: Planet[] = [
                 height: 70,
             },
         ],
-    }
+    },
+    {
+        id: "nextjs-lms",
+        name: "Learning Management System",
+        link: 'nextjs-lms-seven.vercel.app',
+        remark: "My personal project, i build this project to learn Next.js 14 and to build my portfolio.",
+        description: "A sample prototype of Learning management System that i build in few days. User can enroll and unenroll for now and most of the data are dummy. Built just for fun and find the repository in my github.",
+        images: [
+            {
+                src: "/nextjslms-1.png",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/nextjslms-2.png",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/nextjslms-3.png",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/nextjslms-4.png",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/nextjslms-5.png",
+                width: 100,
+                height: 100,
+            },
+        ],
+        frameworks: [
+            {
+                name: "NextJS 14",
+                Image: "/next.png",
+                width: 80,
+                height: 80,
+            },
+            {
+                name: 'Supabase',
+                Image: "/supabase-icon.svg",
+                width: 55,
+                height: 55,
+            }
+
+        ],
+        cloud: [
+            {
+                name: "Vercel",
+                Image: "/vercel.svg",
+                width: 70,
+                height: 70,
+            },
+        ],
+    },
 ];
 
 
