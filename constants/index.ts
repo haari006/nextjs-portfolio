@@ -461,7 +461,7 @@ export const Planets: Planet[] = [
     {
         id: "maths-generator",
         name: "Maths for Kids: Question Bank Generator",
-        link: 'https://github.com/haari006/maths-generator',
+        link: 'https://haari006.github.io/maths-generator/',
         remark: "",
         description: "This project is a web-based application that generates random math questions for primary school students. It features a dynamic difficulty system that increases the challenge as students answer correctly, colorful question backgrounds that change with each new question, and a scoring system to track progress.",
         images: [
