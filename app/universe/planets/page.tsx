@@ -3,15 +3,15 @@ import { PlanetTitleText } from "@/components/sub/SkillText";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "My Projects",
-    description: "List of projects by Haariharan Rajakumar",
-  };
+  title: "My Projects",
+  description: "List of projects by Haariharan Rajakumar",
+};
 
 export default function PlanetsPage() {
   return (
     <div className="flex flex-col items-center justify-center ">
       <div className="py-20">
-        <PlanetTitleText/>
+        <PlanetTitleText />
         <div className="flex flex-wrap justify-center gap-10 px-10">
           <ProjectCard
             src="/pystorm1.webp"
@@ -30,6 +30,12 @@ export default function PlanetsPage() {
             title="Learning Management System"
             description="A learning management system prototype where user can do course enrollment"
             link="planets/nextjs-lms"
+          />
+          <ProjectCard
+            src="/maths-generator.jpeg"
+            title="Maths Question Generator"
+            description="A web app that generates math questions for students to practice"
+            link="planets/maths-generator"
           />
         </div>
       </div>

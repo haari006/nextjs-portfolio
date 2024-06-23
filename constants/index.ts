@@ -458,6 +458,43 @@ export const Planets: Planet[] = [
             },
         ],
     },
+    {
+        id: "maths-generator",
+        name: "Maths for Kids: Question Bank Generator",
+        link: 'https://github.com/haari006/maths-generator',
+        remark: "",
+        description: "This project is a web-based application that generates random math questions for primary school students. It features a dynamic difficulty system that increases the challenge as students answer correctly, colorful question backgrounds that change with each new question, and a scoring system to track progress.",
+        images: [
+            {
+                src: "/maths-generator.jpeg",
+                width: 100,
+                height: 100,
+            },
+        ],
+        frameworks: [
+            {
+                name: "HTML5",
+                Image: "/html.png",
+                width: 80,
+                height: 80,
+            },
+            {
+                name: 'CSS3',
+                Image: "/css.png",
+                width: 55,
+                height: 55,
+            },
+            {
+                name: 'JavaScript',
+                Image: "/js.png",
+                width: 55,
+                height: 55,
+            }
+
+        ],
+        cloud: [
+        ],
+    },
 ];
 
 
