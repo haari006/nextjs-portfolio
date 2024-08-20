@@ -16,8 +16,8 @@ export default function Background() {
       };
       
     return (
-<div className="flex flex-col items-center justify-center">
-  <div className="py-20">
+<div className="flex flex-col items-center justify-center mb-10">
+  <div>
     <motion.div
       className="grid grid-cols-1 md:grid-cols-2 gap-10 px-10"
       variants={containerVariants}

@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 
 export default function PlanetsPage() {
   return (
-    <div className="flex flex-col items-center justify-center ">
-      <div className="py-20">
+    <div className="flex flex-col items-center justify-center">
+      <div className="py-10 px-4 sm:py-16 sm:px-6 lg:py-20 lg:px-8">
         <PlanetTitleText />
-        <div className="flex flex-wrap justify-center gap-10 px-10">
+        <div className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16 px-2 md:px-4 lg:px-8">
           <ProjectCard
             src="/pystorm1.webp"
             title="Pystorm SaaS App"
@@ -40,7 +40,7 @@ export default function PlanetsPage() {
           <ProjectCard
             src="/jp1.PNG"
             title="Landing Page for Coconut Bussiness"
-            description="A sleek and responsive landing page designed for a coconut business, highlighting products, services, and customer reachability."
+            description="A sleek and responsive landing page designed for a coconut business."
             link="planets/coconut-landing-page"
           />
         </div>
@@ -48,3 +48,4 @@ export default function PlanetsPage() {
     </div>
   );
 }
+

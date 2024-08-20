@@ -91,6 +91,11 @@ export const Socials = [
         src: "/linkedin.svg",
         link: "https://www.linkedin.com/in/haariharanr/",
     },
+    {
+        name: "Email me",
+        src: "/email.svg",
+        link: "mailto:harikk002@gmail.com",
+    },
 ];
 
 
@@ -513,7 +518,7 @@ export const Planets: Planet[] = [
                 height: 100,
             },
             {
-                src: "/jp3.PNG",
+                src: "/jp3.jpeg",
                 width: 100,
                 height: 100,
             },
