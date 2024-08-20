@@ -37,6 +37,12 @@ export default function PlanetsPage() {
             description="A web app that generates math questions for students to practice"
             link="planets/maths-generator"
           />
+          <ProjectCard
+            src="/jp1.PNG"
+            title="Landing Page for Coconut Bussiness"
+            description="A sleek and responsive landing page designed for a coconut business, highlighting products, services, and customer reachability."
+            link="planets/coconut-landing-page"
+          />
         </div>
       </div>
     </div>

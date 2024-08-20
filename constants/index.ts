@@ -495,6 +495,53 @@ export const Planets: Planet[] = [
         cloud: [
         ],
     },
+    {
+        id: "coconut-landing-page",
+        name: "JP 7331 Coco Enterprise: Coconut Bussiness Landing Page",
+        link: 'https://jp7331.com',
+        remark: "",
+        description: "This project is a simple, responsive landing page created for a coconut business using Next.js and Framer Motion. It showcases products with smooth animations and an intuitive user interface.",
+        images: [
+            {
+                src: "/jp1.PNG",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/jp2.PNG",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/jp3.PNG",
+                width: 100,
+                height: 100,
+            },
+        ],
+        frameworks: [
+            {
+                name: "NextJS",
+                Image: "/next.png",
+                width: 80,
+                height: 80,
+            },
+            {
+                name: 'Framer Motion',
+                Image: "/framer-motion.svg",
+                width: 55,
+                height: 55,
+            },
+            {
+                name: 'JavaScript',
+                Image: "/js.png",
+                width: 55,
+                height: 55,
+            },
+
+        ],
+        cloud: [
+        ],
+    },
 ];
 
 
