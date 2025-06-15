@@ -14,6 +14,36 @@ export default function PlanetsPage() {
         <PlanetTitleText />
         <div className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16 px-2 md:px-4 lg:px-8">
           <ProjectCard
+            src="/worldExpo1.png"
+            title="World Expo 2025 Monitoring Dashboard"
+            description="A web app that provides monitoring of the World Expo 2025, including impressive statistics of their ads and social media presence."
+            link="planets/worldExpo-my"
+          />
+          <ProjectCard
+            src="/insuredSpeaks1.png"
+            title="InsuredSpeaks"
+            description="A web app that allows users to share their insurance experiences and read others' reviews."
+            link="planets/insuredspeaks"
+          />
+          <ProjectCard
+            src="/lifepath1.png"
+            title="LifePath - Educational consulting platform"
+            description="LifePath is an educational consulting platform that connects students with lifepath experts to guide them in their academic and career paths."
+            link="planets/lifepath"
+          />
+          <ProjectCard
+            src="/jp1.PNG"
+            title="Landing Page for Coconut Bussiness"
+            description="A sleek and responsive landing page designed for a coconut business."
+            link="planets/coconut-landing-page"
+          />
+          <ProjectCard
+            src="/maths-generator.jpeg"
+            title="Maths Question Generator"
+            description="A web app that generates math questions for students to practice"
+            link="planets/maths-generator"
+          />
+          <ProjectCard
             src="/pystorm1.webp"
             title="Pystorm SaaS App"
             description="Pystorm is a SaaS app which offers a user-friendly platform tailored for small businesses to simplify data management and visualization."
@@ -24,24 +54,6 @@ export default function PlanetsPage() {
             title="Pystorm Dashboard"
             description="A web app that supports multi-tenancy, allowing users to view embedded dashboards that was made to visualize organization data"
             link="planets/pystorm-dashboard"
-          />
-          <ProjectCard
-            src="/nextjslms-1.png"
-            title="Learning Management System"
-            description="A learning management system prototype where user can do course enrollment"
-            link="planets/nextjs-lms"
-          />
-          <ProjectCard
-            src="/maths-generator.jpeg"
-            title="Maths Question Generator"
-            description="A web app that generates math questions for students to practice"
-            link="planets/maths-generator"
-          />
-          <ProjectCard
-            src="/jp1.PNG"
-            title="Landing Page for Coconut Bussiness"
-            description="A sleek and responsive landing page designed for a coconut business."
-            link="planets/coconut-landing-page"
           />
         </div>
       </div>

@@ -14,167 +14,158 @@ const PlanetPreviewComponent = ({ planet }: { planet: Planet }) => {
   };
 
   return (
-    <>
-      <div className="">
-        <div className="p-4">{/* <BreadCrumb productId={id} /> */}</div>
-        <div className="mx-auto px-4 py-10 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8 glass-effect bg-orange-200/10 backdrop-blur-lg rounded-lg p-8 shadow-lg">
-          {/* Project */}
-          <div className="lg:grid lg:grid-cols-7 lg:grid-rows-1 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
-            <PlanetCarousel images={planet.images} />
-
-            {/* Project details */}
-            <div className="mx-auto mt-14 max-w-2xl sm:mt-16 lg:col-span-3 lg:row-span-2 lg:row-end-2 lg:mt-0 lg:max-w-none">
-              <div className="flex items-center justify-between gap-4 mt-4">
-                <div>
-                  <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                    {planet.name}
-                  </h1>
-                </div>
-                <button
-                  type="button"
-                  className="items-center justify-end rounded-md border border-transparent bg-orange-500 px-3 py-2 text-base font-medium text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-800 focus:ring-offset-2 focus:ring-offset-gray-50"
-                  style={{ minWidth: "100px" }}
-                  onClick={() =>
-                    handleVisit(
-                      planet.link ??
-                        "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                    )
-                  }
-                >
-                  Visit
-                </button>
-              </div>
-
-              <div className="flex flex-col justify-between tracking-tight mt-10 gap-4">
-                <p className="text-sm font-medium text-white leading-relaxed">
-                  {planet.description}
-                </p>
-                <p className="text-sm font-medium text-white leading-relaxed">
+    <div className="min-h-screen bg-transparent bg-gradient-to-b via-black to-gray-800">
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        {/* Project Header Section */}
+        <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8 mb-8 shadow-2xl">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div className="flex-1">
+              <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent mb-4">
+                {planet.name}
+              </h1>
+              <p className="text-gray-300 text-lg leading-relaxed mb-4">
+                {planet.description}
+              </p>
+              {planet.remark && (
+                <p className="text-gray-400 text-base leading-relaxed">
                   {planet.remark}
                 </p>
-              </div>
-
-              <div className="mt-10 border-t border-gray-200 pt-10">
-                {/* <dl>
-        {showFAQ
-          ? productPreview.faqs?.map((faq) => (
-              <Fragment key={faq.question}>
-                <dt className="mt-4 text-sm font-medium text-gray-600">{faq.question}</dt>
-                <dd className="prose text-xs prose-sm mt-2 max-w-none text-gray-500">
-                  <p>{faq.answer}</p>
-                </dd>
-              </Fragment>
-            ))
-          : productPreview.faqs?.slice(0,0).map((faq) => (
-              <Fragment key={faq.question}>
-                <dt className="mt-4 text-sm font-medium text-gray-600">{faq.question}</dt>
-                <dd className="prose text-xs prose-sm mt-2 max-w-none text-gray-500">
-                  <p>{faq.answer}</p>
-                </dd>
-              </Fragment>
-            ))}
-      </dl> */}
-
-                {/* {productPreview.faqs?.length > 0 && (
-        <button
-          onClick={toggleShowFAQs}
-          className="text-sm font-medium text-sky-600 hover:text-sky-500 cursor-pointer"
-        >
-          {showFAQ ? 'Read Less' : 'FAQ'}
-        </button>
-      )} */}
-              </div>
+              )}
             </div>
 
-            <div className="mx-auto mt-16 w-full max-w-2xl lg:col-span-4 lg:mt-0 lg:max-w-none">
-              <Tab.Group as="div">
-                <div className="border-b border-gray-200">
-                  <Tab.List className="-mb-px flex space-x-8">
-                    <Tab
-                      className={({ selected }) =>
-                        classNames(
-                          selected
-                            ? "border-orange-600 text-white"
-                            : "border-transparent text-white hover:border-orange-300",
-                          "whitespace-nowrap border-b-2 py-6 text-sm font-medium"
-                        )
-                      }
-                    >
-                      Frameworks
-                    </Tab>
-                    <Tab
-                      className={({ selected }) =>
-                        classNames(
-                          selected
-                            ? "border-orange-600 text-white"
-                            : "border-transparent text-gray-100 hover:border-orange-300",
-                          "whitespace-nowrap border-b-2 py-6 text-sm font-medium"
-                        )
-                      }
-                    >
-                      Cloud Development
-                    </Tab>
-                  </Tab.List>
-                </div>
-                <Tab.Panels as={Fragment}>
-                  <Tab.Panel className="">
-                    <h3 className="sr-only">Frameworks</h3>
-
-                    <dl className="grid grid-cols-2 gap-1">
-                      {planet.frameworks?.map((detail) => (
-                        <Fragment key={detail.name}>
-                          <div className="flex flex-col items-center">
-                            <dt className="mt-10 font-medium text-white text-center">
-                              {detail.name}
-                            </dt>
-                            <dd className="prose prose-sm mt-2 text-gray-500">
-                              <Image
-                                src={detail.Image}
-                                width={50}
-                                height={50}
-                                alt="Frameworks"
-                              />
-                            </dd>
-                          </div>
-                        </Fragment>
-                      ))}
-                    </dl>
-                  </Tab.Panel>
-
-                  <Tab.Panel className="">
-                    <h3 className="sr-only">Cloud Development</h3>
-
-                    <dl className="grid grid-cols-2 gap-1">
-                      {planet.cloud?.map((detail) => (
-                        <Fragment key={detail.name}>
-                          <div className="flex flex-col items-center">
-                            <dt className="mt-10 font-medium text-white text-center">
-                              {detail.name}
-                            </dt>
-                            <dd
-                              className={`${
-                                detail.name === "Vercel" ? "bg-white" : ""
-                              } prose prose-sm mt-2 text-gray-500 p-1`}
-                            >
-                              <Image
-                                src={detail.Image}
-                                width={detail.width}
-                                height={detail.width}
-                                alt="clouds"
-                              />
-                            </dd>
-                          </div>
-                        </Fragment>
-                      ))}
-                    </dl>
-                  </Tab.Panel>
-                </Tab.Panels>
-              </Tab.Group>
+            <div className="flex-shrink-0">
+              <button
+                type="button"
+                className="group relative inline-flex items-center justify-center px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-xl shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-500/50"
+                onClick={() =>
+                  handleVisit(
+                    planet.link ?? "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                  )
+                }
+              >
+                <span className="mr-2">Visit Project</span>
+                <svg
+                  className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Image Carousel Section */}
+          <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6 shadow-2xl">
+            <PlanetCarousel images={planet.images} />
+          </div>
+
+          {/* Tech Stack Section */}
+          <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-xl border border-gray-700/50 rounded-2xl shadow-2xl">
+            <Tab.Group as="div">
+              {/* Tab Navigation */}
+              <div className="border-b border-gray-700/50 px-6">
+                <Tab.List className="flex space-x-8 -mb-px">
+                  <Tab
+                    className={({ selected }) =>
+                      classNames(
+                        selected
+                          ? "border-orange-500 text-orange-400 bg-orange-500/10"
+                          : "border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-600",
+                        "whitespace-nowrap border-b-2 py-4 px-6 text-sm font-semibold rounded-t-lg transition-all duration-200"
+                      )
+                    }
+                  >
+                    Frameworks
+                  </Tab>
+                  <Tab
+                    className={({ selected }) =>
+                      classNames(
+                        selected
+                          ? "border-orange-500 text-orange-400 bg-orange-500/10"
+                          : "border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-600",
+                        "whitespace-nowrap border-b-2 py-4 px-6 text-sm font-semibold rounded-t-lg transition-all duration-200"
+                      )
+                    }
+                  >
+                    Cloud Development
+                  </Tab>
+                </Tab.List>
+              </div>
+
+              {/* Tab Panels */}
+              <Tab.Panels className="p-6">
+                <Tab.Panel>
+                  <h3 className="sr-only">Frameworks</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                    {planet.frameworks?.map((detail) => (
+                      <div
+                        key={detail.name}
+                        className="group flex flex-col items-center p-4 bg-gray-800/40 rounded-xl border border-gray-700/30 hover:border-orange-500/50 hover:bg-gray-700/40 transition-all duration-300 hover:scale-105"
+                      >
+                        <div className="w-16 h-16 flex items-center justify-center mb-3 bg-white/10 rounded-lg group-hover:bg-white/20 transition-colors duration-300">
+                          <Image
+                            src={detail.Image}
+                            width={40}
+                            height={40}
+                            alt={detail.name}
+                            className="object-contain"
+                          />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 text-center group-hover:text-white transition-colors duration-200">
+                          {detail.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </Tab.Panel>
+
+                <Tab.Panel>
+                  <h3 className="sr-only">Cloud Development</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                    {planet.cloud?.map((detail) => (
+                      <div
+                        key={detail.name}
+                        className="group flex flex-col items-center p-4 bg-gray-800/40 rounded-xl border border-gray-700/30 hover:border-orange-500/50 hover:bg-gray-700/40 transition-all duration-300 hover:scale-105"
+                      >
+                        <div
+                          className={`w-16 h-16 flex items-center justify-center mb-3 rounded-lg group-hover:scale-110 transition-transform duration-300 ${
+                            detail.name === "Vercel"
+                              ? "bg-white"
+                              : "bg-white/10 group-hover:bg-white/20"
+                          }`}
+                        >
+                          <Image
+                            src={detail.Image}
+                            width={detail.width || 40}
+                            height={detail.width || 40}
+                            alt={detail.name}
+                            className="object-contain"
+                          />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 text-center group-hover:text-white transition-colors duration-200">
+                          {detail.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </Tab.Panel>
+              </Tab.Panels>
+            </Tab.Group>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
