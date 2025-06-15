@@ -46,7 +46,7 @@ const HeroContent = () => {
           variants={slideInFromLeft(0.8)}
           className="text-sm md:text-lg text-gray-400 my-5 max-w-[100%] md:max-w-[600px] mx-auto md:mx-0"
         >
-          I&apos;ve been a Web Developer for the past year and a half, gaining
+          I&apos;ve been a Web Developer for some light years, gaining
           significant experience in web development. Click 'Learn Me' to find
           out more about me.
         </motion.p>
