@@ -406,52 +406,48 @@ export const Planets: Planet[] = [
             },
         ],
     },
-    {
-        id: "nextjs-lms",
-        name: "Learning Management System",
-        link: 'https://nextjs-lms-seven.vercel.app',
-        remark: "My personal project, i build this project to learn Next.js 14 and to build my portfolio.",
-        description: "A sample prototype of Learning management System that i build in few days. User can enroll and unenroll for now and most of the data are dummy. Built just for fun and find the repository in my github.",
+       {
+        id: "insuredspeaks",
+        name: "Insured Speaks",
+        link: 'https://inspuredspeaks.online',
+        remark: "",
+        description: "Your AI-powered assistant for managing health insurance with ease—simplifying policies, support, and recommendations. Worked as freelancer for this project. Mainly worked on the frontend.",
         images: [
             {
-                src: "/nextjslms-1.png",
+                src: "/insuredspeaks1.png",
                 width: 100,
                 height: 100,
             },
             {
-                src: "/nextjslms-2.png",
+                src: "/insuredspeaks2.png",
                 width: 100,
                 height: 100,
             },
             {
-                src: "/nextjslms-3.png",
-                width: 100,
-                height: 100,
-            },
-            {
-                src: "/nextjslms-4.png",
-                width: 100,
-                height: 100,
-            },
-            {
-                src: "/nextjslms-5.png",
+                src: "/insuredspeaks3.png",
                 width: 100,
                 height: 100,
             },
         ],
         frameworks: [
             {
-                name: "NextJS 14",
+                name: "NextJS",
                 Image: "/next.png",
                 width: 80,
                 height: 80,
             },
             {
-                name: 'Supabase',
-                Image: "/supabase-icon.svg",
+                name: 'Framer Motion',
+                Image: "/framer-motion.svg",
                 width: 55,
                 height: 55,
-            }
+            },
+            {
+                name: 'JavaScript',
+                Image: "/js.png",
+                width: 55,
+                height: 55,
+            },
 
         ],
         cloud: [
@@ -461,6 +457,71 @@ export const Planets: Planet[] = [
                 width: 70,
                 height: 70,
             },
+            {
+                name: 'Supabase',
+                Image: "/supabase-icon.svg",
+                width: 55,
+                height: 55,
+            }
+        ],
+    },
+    {
+        id: "worldExpo-my",
+        name: "World Expo 2025 Monitoring System",
+        link: '#',
+        remark: "",
+        description: "A comprehensive monitoring system for the World Expo 2025, designed to track and their reach with the advertisment campaigns. This project was developed as a part of freelance work. I was responsible for the frontend development, ensuring a seamless user experience and plugging the supabase RPC endpoints.",
+        images: [
+            {
+                src: "/insuredspeaks1.png",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/insuredspeaks2.png",
+                width: 100,
+                height: 100,
+            },
+            {
+                src: "/insuredspeaks3.png",
+                width: 100,
+                height: 100,
+            },
+        ],
+        frameworks: [
+            {
+                name: "NextJS",
+                Image: "/next.png",
+                width: 80,
+                height: 80,
+            },
+            {
+                name: 'Framer Motion',
+                Image: "/framer-motion.svg",
+                width: 55,
+                height: 55,
+            },
+            {
+                name: 'JavaScript',
+                Image: "/js.png",
+                width: 55,
+                height: 55,
+            },
+
+        ],
+        cloud: [
+            {
+                name: "Vercel",
+                Image: "/vercel.svg",
+                width: 70,
+                height: 70,
+            },
+            {
+                name: 'Supabase',
+                Image: "/supabase-icon.svg",
+                width: 55,
+                height: 55,
+            }
         ],
     },
     {
@@ -556,9 +617,19 @@ export const jobs = [
       company: "Pydantic Sdn Bhd (Pystorm)",
       designation: "Junior Web Developer",
       logo: {
-        url: "https://wzpgifvdurjfzxzadalr.supabase.co/storage/v1/object/public/pystorm-client/pystorm-logo.png"
+        url: "https://media.licdn.com/dms/image/v2/D4D0BAQFYn1Yu0Hct0A/company-logo_200_200/company-logo_200_200/0/1715751319378/pystorm_logo?e=1755734400&v=beta&t=cIfjs2O9rchTQTIgipP6QKsox1gSw7t3Ok0lM3YP9hs"
       },
       from: "2023-03-21", 
+      to: "2024-08-24" 
+    },
+        {
+      id: 2,
+      company: "GoLearn",
+      designation: "Web Developer",
+      logo: {
+        url: "https://golearn.com.my/assets/img/golearn-main-logo.svg"
+      },
+      from: "2024-09-02", 
       to: null 
     },
   ];
@@ -568,9 +639,6 @@ export const jobs = [
       id: 1,
       company: "Ungku Omar Polytechnic",
       designation: "Diploma of Digital Technology in Computer Security ",
-      logo: {
-        url: "https://media.licdn.com/dms/image/C510BAQGN0Dub_nSGrQ/company-logo_100_100/0/1630625830981?e=1721260800&v=beta&t=2AzvDJBOljIZJroyivBHLP_agu1X5aPzHmL3wr0PauE",
-      },
       from: "2017-10-05",
       to: "2020-03-21", 
     },
@@ -578,9 +646,6 @@ export const jobs = [
       id: 2,
       company: "Universiti Teknikal Malaysia Melaka",
       designation: "Bachelor of Computer Science (Computer Security)",
-      logo: {
-        url: "https://media.licdn.com/dms/image/D560BAQEdbs-tNx86Jg/company-logo_100_100/0/1710984034181/universiti_teknikal_malaysia_melaka_logo?e=1721260800&v=beta&t=hPTkAulqg8EHBtFaUcBVZe4OZBOclw-G2JpNAD5bjws",
-      },
       from: "2020-10-15",
       to: "2023-06-21", 
     },
