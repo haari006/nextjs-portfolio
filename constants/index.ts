@@ -521,7 +521,7 @@ export const Planets: Planet[] = [
   {
     id: "lifepath",
     name: "LifePath: Choose LifePath for Success.",
-    link: "https://lifepath.site",
+    link: "https://www.lifepathedu.site",
     remark: "",
     description:
       "LifePath Foundation is an educational consulting platform offering study abroad programs, vocational training, and career guidance across multiple countries. As a freelancer, I developed their landing page with a clean, professional design that effectively showcases their educational services in English and Vietnamese using Sanity CMS. The project focused on creating an organized, user-friendly interface to present their offerings.",
