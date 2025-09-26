@@ -1,7 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 import type {
   ProjectCloudProvider,
   ProjectImage,
@@ -12,6 +10,8 @@ import {
   PROJECT_SUBMISSION_COOKIE_NAME,
   PROJECT_SUBMISSION_COOKIE_VALUE,
 } from "@/lib/projectSubmissionAuth";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 export interface ProjectActionResponse {
   success: boolean;
@@ -71,13 +71,17 @@ export const authorizeProjectSubmission = async (
     return failure;
   }
 
-  cookies().set(PROJECT_SUBMISSION_COOKIE_NAME, PROJECT_SUBMISSION_COOKIE_VALUE, {
-    httpOnly: true,
-    sameSite: "strict",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 60 * 60 * 24,
-  });
+  cookies().set(
+    PROJECT_SUBMISSION_COOKIE_NAME,
+    PROJECT_SUBMISSION_COOKIE_VALUE,
+    {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24,
+    }
+  );
 
   return {
     success: true,
@@ -124,7 +128,10 @@ export const createProject = async (
     return { success: false, message: "Please provide a project description." };
   }
 
-  const imagesResult = parseJsonArray<ProjectImage>(formData.get("images"), "images");
+  const imagesResult = parseJsonArray<ProjectImage>(
+    formData.get("images"),
+    "images"
+  );
   const frameworksResult = parseJsonArray<ProjectTechnology>(
     formData.get("frameworks"),
     "frameworks"
@@ -138,7 +145,9 @@ export const createProject = async (
     return {
       success: false,
       message:
-        imagesResult.error || frameworksResult.error || cloudResult.error ||
+        imagesResult.error ||
+        frameworksResult.error ||
+        cloudResult.error ||
         "The submitted project includes invalid JSON data.",
     };
   }

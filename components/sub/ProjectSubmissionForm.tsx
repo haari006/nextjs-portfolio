@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useRef, useState, useTransition } from "react";
 import { createProject } from "@/actions/projects";
 import type {
   ProjectCloudProvider,
   ProjectImage,
   ProjectTechnology,
 } from "@/constants/type";
+import { useMemo, useRef, useState, useTransition } from "react";
 
 interface FormStatus {
   type: "idle" | "success" | "error";
@@ -61,7 +61,9 @@ const toProjectImages = (images: ImageField[]): ProjectImage[] =>
     }))
     .filter((image) => image.src.length > 0);
 
-const toProjectTechnologies = (technologies: TechnologyField[]): ProjectTechnology[] =>
+const toProjectTechnologies = (
+  technologies: TechnologyField[]
+): ProjectTechnology[] =>
   technologies
     .map((technology) => ({
       name: technology.name.trim(),
@@ -69,9 +71,13 @@ const toProjectTechnologies = (technologies: TechnologyField[]): ProjectTechnolo
       width: normalizeDimension(technology.width, 80),
       height: normalizeDimension(technology.height, 80),
     }))
-    .filter((technology) => technology.name.length > 0 || technology.Image.length > 0);
+    .filter(
+      (technology) => technology.name.length > 0 || technology.Image.length > 0
+    );
 
-const toProjectCloudProviders = (providers: CloudField[]): ProjectCloudProvider[] =>
+const toProjectCloudProviders = (
+  providers: CloudField[]
+): ProjectCloudProvider[] =>
   providers
     .map((provider) => ({
       name: provider.name.trim(),
@@ -79,7 +85,9 @@ const toProjectCloudProviders = (providers: CloudField[]): ProjectCloudProvider[
       width: normalizeDimension(provider.width, 80),
       height: normalizeDimension(provider.height, 80),
     }))
-    .filter((provider) => provider.name.length > 0 || provider.Image.length > 0);
+    .filter(
+      (provider) => provider.name.length > 0 || provider.Image.length > 0
+    );
 
 interface ProjectSubmissionFormProps {
   requireToken?: boolean;
@@ -95,7 +103,10 @@ export const ProjectSubmissionForm = ({
   const [cloudProviders, setCloudProviders] = useState<CloudField[]>([
     createEmptyCloud(),
   ]);
-  const [status, setStatus] = useState<FormStatus>({ type: "idle", message: "" });
+  const [status, setStatus] = useState<FormStatus>({
+    type: "idle",
+    message: "",
+  });
   const [isPending, startTransition] = useTransition();
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -106,9 +117,7 @@ export const ProjectSubmissionForm = ({
   ) => {
     setImages((current) =>
       current.map((image, currentIndex) =>
-        currentIndex === index
-          ? { ...image, [key]: value }
-          : image
+        currentIndex === index ? { ...image, [key]: value } : image
       )
     );
   };
@@ -120,9 +129,7 @@ export const ProjectSubmissionForm = ({
   ) => {
     setFrameworks((current) =>
       current.map((item, currentIndex) =>
-        currentIndex === index
-          ? { ...item, [key]: value }
-          : item
+        currentIndex === index ? { ...item, [key]: value } : item
       )
     );
   };
@@ -134,21 +141,22 @@ export const ProjectSubmissionForm = ({
   ) => {
     setCloudProviders((current) =>
       current.map((item, currentIndex) =>
-        currentIndex === index
-          ? { ...item, [key]: value }
-          : item
+        currentIndex === index ? { ...item, [key]: value } : item
       )
     );
   };
 
-  const addImage = () => setImages((current) => [...current, createEmptyImage()]);
+  const addImage = () =>
+    setImages((current) => [...current, createEmptyImage()]);
   const addFramework = () =>
     setFrameworks((current) => [...current, createEmptyTechnology()]);
   const addCloud = () =>
     setCloudProviders((current) => [...current, createEmptyCloud()]);
 
   const removeImage = (index: number) =>
-    setImages((current) => current.filter((_, currentIndex) => currentIndex !== index));
+    setImages((current) =>
+      current.filter((_, currentIndex) => currentIndex !== index)
+    );
   const removeFramework = (index: number) =>
     setFrameworks((current) =>
       current.filter((_, currentIndex) => currentIndex !== index)
@@ -199,7 +207,10 @@ export const ProjectSubmissionForm = ({
       <section className="grid gap-6 md:grid-cols-2">
         {requireToken && (
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-200" htmlFor="token">
+            <label
+              className="block text-sm font-semibold text-gray-200"
+              htmlFor="token"
+            >
               Submission token
             </label>
             <input
@@ -211,12 +222,16 @@ export const ProjectSubmissionForm = ({
               placeholder="Enter the secret token"
             />
             <p className="text-xs text-gray-400">
-              Define <code>PROJECT_SUBMISSION_TOKEN</code> in your environment and use it here to protect the form.
+              Define <code>PROJECT_SUBMISSION_TOKEN</code> in your environment
+              and use it here to protect the form.
             </p>
           </div>
         )}
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-200" htmlFor="id">
+          <label
+            className="block text-sm font-semibold text-gray-200"
+            htmlFor="id"
+          >
             Project ID (slug)
           </label>
           <input
@@ -229,11 +244,15 @@ export const ProjectSubmissionForm = ({
             placeholder="e.g. nextjs-portfolio"
           />
           <p className="text-xs text-gray-400">
-            Lowercase letters, numbers, and hyphens only. This becomes the URL path.
+            Lowercase letters, numbers, and hyphens only. This becomes the URL
+            path.
           </p>
         </div>
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-200" htmlFor="name">
+          <label
+            className="block text-sm font-semibold text-gray-200"
+            htmlFor="name"
+          >
             Project name
           </label>
           <input
@@ -246,7 +265,10 @@ export const ProjectSubmissionForm = ({
           />
         </div>
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-200" htmlFor="link">
+          <label
+            className="block text-sm font-semibold text-gray-200"
+            htmlFor="link"
+          >
             Live link (optional)
           </label>
           <input
@@ -260,7 +282,10 @@ export const ProjectSubmissionForm = ({
       </section>
 
       <div className="space-y-2">
-        <label className="block text-sm font-semibold text-gray-200" htmlFor="description">
+        <label
+          className="block text-sm font-semibold text-gray-200"
+          htmlFor="description"
+        >
           Project description
         </label>
         <textarea
@@ -274,7 +299,10 @@ export const ProjectSubmissionForm = ({
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-semibold text-gray-200" htmlFor="remark">
+        <label
+          className="block text-sm font-semibold text-gray-200"
+          htmlFor="remark"
+        >
           Personal contribution (optional)
         </label>
         <textarea
@@ -288,7 +316,9 @@ export const ProjectSubmissionForm = ({
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-100">Project images</h2>
+          <h2 className="text-lg font-semibold text-gray-100">
+            Project images
+          </h2>
           <button
             type="button"
             className="rounded-lg border border-orange-600 px-3 py-1 text-sm font-medium text-orange-400 transition hover:bg-orange-600/10"
@@ -298,7 +328,8 @@ export const ProjectSubmissionForm = ({
           </button>
         </div>
         <p className="text-xs text-gray-400">
-          Provide at least one image to feature the project. Images are displayed in the preview carousel.
+          Provide at least one image to feature the project. Images are
+          displayed in the preview carousel.
         </p>
         <div className="space-y-4">
           {images.map((image, index) => (
@@ -314,7 +345,9 @@ export const ProjectSubmissionForm = ({
                   <input
                     required={!hasImages}
                     value={image.src}
-                    onChange={(event) => handleImageChange(index, "src", event.target.value)}
+                    onChange={(event) =>
+                      handleImageChange(index, "src", event.target.value)
+                    }
                     placeholder="https://"
                     className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
                   />
@@ -327,7 +360,9 @@ export const ProjectSubmissionForm = ({
                     <input
                       type="number"
                       value={image.width}
-                      onChange={(event) => handleImageChange(index, "width", event.target.value)}
+                      onChange={(event) =>
+                        handleImageChange(index, "width", event.target.value)
+                      }
                       className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
                     />
                   </div>
@@ -338,7 +373,9 @@ export const ProjectSubmissionForm = ({
                     <input
                       type="number"
                       value={image.height}
-                      onChange={(event) => handleImageChange(index, "height", event.target.value)}
+                      onChange={(event) =>
+                        handleImageChange(index, "height", event.target.value)
+                      }
                       className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
                     />
                   </div>
@@ -362,7 +399,9 @@ export const ProjectSubmissionForm = ({
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-100">Frameworks & libraries</h2>
+          <h2 className="text-lg font-semibold text-gray-100">
+            Frameworks & libraries
+          </h2>
           <button
             type="button"
             className="rounded-lg border border-orange-600 px-3 py-1 text-sm font-medium text-orange-400 transition hover:bg-orange-600/10"
@@ -449,7 +488,9 @@ export const ProjectSubmissionForm = ({
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-100">Cloud & infrastructure</h2>
+          <h2 className="text-lg font-semibold text-gray-100">
+            Cloud & infrastructure
+          </h2>
           <button
             type="button"
             className="rounded-lg border border-orange-600 px-3 py-1 text-sm font-medium text-orange-400 transition hover:bg-orange-600/10"
