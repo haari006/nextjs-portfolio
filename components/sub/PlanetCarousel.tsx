@@ -1,18 +1,38 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import type { ProjectImage } from "@/constants/type";
 
-const PlanetCarousel = ({ images }: { images: Image[] }) => {
+type CarouselImage = ProjectImage | string;
+
+interface PlanetCarouselProps {
+  images?: CarouselImage[];
+}
+
+const normalizeImages = (images: CarouselImage[]): ProjectImage[] =>
+  images.map((image) =>
+    typeof image === "string"
+      ? {
+          src: image,
+          width: 1200,
+          height: 800,
+        }
+      : image
+  );
+
+const PlanetCarousel = ({ images = [] }: PlanetCarouselProps) => {
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  const slides = useMemo(() => normalizeImages(images), [images]);
+
   const nextSlide = () => {
-    setCurrent(current === images?.length - 1 ? 0 : current + 1);
+    setCurrent((value) => (value === slides.length - 1 ? 0 : value + 1));
   };
 
   const prevSlide = () => {
-    setCurrent(current === 0 ? images?.length - 1 : current - 1);
+    setCurrent((value) => (value === 0 ? slides.length - 1 : value - 1));
   };
 
   useEffect(() => {
@@ -22,7 +42,7 @@ const PlanetCarousel = ({ images }: { images: Image[] }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  if (!Array.isArray(images) || images.length <= 0) {
+  if (!Array.isArray(slides) || slides.length === 0) {
     return null;
   }
 
@@ -36,15 +56,15 @@ const PlanetCarousel = ({ images }: { images: Image[] }) => {
             className="flex transition-transform duration-1000 ease-in-out"
             style={{ transform: `translateX(-${current * 100}%)` }}
           >
-            {images.map((img, index) => (
+            {slides.map((img, index) => (
               <Image
                 key={index}
-                src={img}
+                src={img.src}
                 alt={`Slide ${index}`}
                 className="w-full h-auto flex-shrink-0"
-                onLoad={() => setLoading(false)} 
-                width={1200}
-                height={800}
+                onLoad={() => setLoading(false)}
+                width={img.width || 1200}
+                height={img.height || 800}
               />
             ))}
           </div>
