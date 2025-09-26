@@ -1,8 +1,8 @@
 "use client";
-import { Fragment } from "react";
 import { Tab } from "@headlessui/react";
-import PlanetCarousel from "./PlanetCarousel";
 import Image from "next/image";
+import type { Planet } from "@/constants/type";
+import PlanetCarousel from "./PlanetCarousel";
 
 const PlanetPreviewComponent = ({ planet }: { planet: Planet }) => {
   function classNames(...classes: string[]) {
