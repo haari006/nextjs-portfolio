@@ -1,3 +1,5 @@
+import type { Planet } from "./type";
+
 export const Skill_data = [
   {
     skill_name: "Html 5",
