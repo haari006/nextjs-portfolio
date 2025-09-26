@@ -1,59 +1,145 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
 import { createProject } from "@/actions/projects";
 import type {
   ProjectCloudProvider,
   ProjectImage,
   ProjectTechnology,
 } from "@/constants/type";
+import { useMemo, useRef, useState, useTransition } from "react";
 
 interface FormStatus {
   type: "idle" | "success" | "error";
   message: string;
 }
 
-const createEmptyImage = (): ProjectImage => ({ src: "", width: 100, height: 100 });
-const createEmptyTechnology = (): ProjectTechnology => ({
+interface ImageField {
+  file: File | null;
+  fileName: string;
+  width: string;
+  height: string;
+}
+
+interface TechnologyField {
+  name: string;
+  Image: string;
+  width: string;
+  height: string;
+}
+
+interface CloudField {
+  name: string;
+  Image: string;
+  width: string;
+  height: string;
+}
+
+const createEmptyImage = (): ImageField => ({
+  file: null,
+  fileName: "",
+  width: "",
+  height: "",
+});
+const createEmptyTechnology = (): TechnologyField => ({
   name: "",
   Image: "",
-  width: 80,
-  height: 80,
+  width: "80",
+  height: "80",
 });
-const createEmptyCloud = (): ProjectCloudProvider => ({
+const createEmptyCloud = (): CloudField => ({
   name: "",
   Image: "",
-  width: 80,
-  height: 80,
+  width: "80",
+  height: "80",
 });
 
-const removeEmptyItems = <T extends object>(items: T[]) =>
-  items.filter((item) =>
-    Object.values(item as Record<string, unknown>).some(
-      (value) => value !== ""
-    )
-  );
+const normalizeDimension = (value: string, fallback: number) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+};
 
-export const ProjectSubmissionForm = () => {
-  const [images, setImages] = useState<ProjectImage[]>([createEmptyImage()]);
-  const [frameworks, setFrameworks] = useState<ProjectTechnology[]>([
+const toImageMetadata = (
+  images: ImageField[]
+): Pick<ProjectImage, "width" | "height">[] =>
+  images
+    .filter((image) => image.file)
+    .map((image) => ({
+      width: normalizeDimension(image.width, 1600),
+      height: normalizeDimension(image.height, 900),
+    }));
+
+const toProjectTechnologies = (
+  technologies: TechnologyField[]
+): ProjectTechnology[] =>
+  technologies
+    .map((technology) => ({
+      name: technology.name.trim(),
+      Image: technology.Image.trim(),
+      width: normalizeDimension(technology.width, 80),
+      height: normalizeDimension(technology.height, 80),
+    }))
+    .filter(
+      (technology) => technology.name.length > 0 || technology.Image.length > 0
+    );
+
+const toProjectCloudProviders = (
+  providers: CloudField[]
+): ProjectCloudProvider[] =>
+  providers
+    .map((provider) => ({
+      name: provider.name.trim(),
+      Image: provider.Image.trim(),
+      width: normalizeDimension(provider.width, 80),
+      height: normalizeDimension(provider.height, 80),
+    }))
+    .filter(
+      (provider) => provider.name.length > 0 || provider.Image.length > 0
+    );
+
+interface ProjectSubmissionFormProps {
+  requireToken?: boolean;
+}
+
+export const ProjectSubmissionForm = ({
+  requireToken = true,
+}: ProjectSubmissionFormProps) => {
+  const [images, setImages] = useState<ImageField[]>([createEmptyImage()]);
+  const [frameworks, setFrameworks] = useState<TechnologyField[]>([
     createEmptyTechnology(),
   ]);
-  const [cloudProviders, setCloudProviders] = useState<ProjectCloudProvider[]>([
+  const [cloudProviders, setCloudProviders] = useState<CloudField[]>([
     createEmptyCloud(),
   ]);
-  const [status, setStatus] = useState<FormStatus>({ type: "idle", message: "" });
+  const [status, setStatus] = useState<FormStatus>({
+    type: "idle",
+    message: "",
+  });
   const [isPending, startTransition] = useTransition();
+  const formRef = useRef<HTMLFormElement | null>(null);
 
-  const handleImageChange = (
+  const handleImageDimensionChange = (
     index: number,
-    key: keyof ProjectImage,
+    key: "width" | "height",
     value: string
   ) => {
     setImages((current) =>
       current.map((image, currentIndex) =>
+        currentIndex === index ? { ...image, [key]: value } : image
+      )
+    );
+  };
+
+  const handleImageFileChange = (index: number, files: FileList | null) => {
+    const file = files?.[0] ?? null;
+
+    setImages((current) =>
+      current.map((image, currentIndex) =>
         currentIndex === index
-          ? { ...image, [key]: key === "src" ? value : Number(value) }
+          ? {
+              ...image,
+              file,
+              fileName: file?.name ?? "",
+            }
           : image
       )
     );
@@ -61,40 +147,39 @@ export const ProjectSubmissionForm = () => {
 
   const handleFrameworkChange = (
     index: number,
-    key: keyof ProjectTechnology,
+    key: keyof TechnologyField,
     value: string
   ) => {
     setFrameworks((current) =>
       current.map((item, currentIndex) =>
-        currentIndex === index
-          ? { ...item, [key]: key === "name" || key === "Image" ? value : Number(value) }
-          : item
+        currentIndex === index ? { ...item, [key]: value } : item
       )
     );
   };
 
   const handleCloudChange = (
     index: number,
-    key: keyof ProjectCloudProvider,
+    key: keyof CloudField,
     value: string
   ) => {
     setCloudProviders((current) =>
       current.map((item, currentIndex) =>
-        currentIndex === index
-          ? { ...item, [key]: key === "name" || key === "Image" ? value : Number(value) }
-          : item
+        currentIndex === index ? { ...item, [key]: value } : item
       )
     );
   };
 
-  const addImage = () => setImages((current) => [...current, createEmptyImage()]);
+  const addImage = () =>
+    setImages((current) => [...current, createEmptyImage()]);
   const addFramework = () =>
     setFrameworks((current) => [...current, createEmptyTechnology()]);
   const addCloud = () =>
     setCloudProviders((current) => [...current, createEmptyCloud()]);
 
   const removeImage = (index: number) =>
-    setImages((current) => current.filter((_, currentIndex) => currentIndex !== index));
+    setImages((current) =>
+      current.filter((_, currentIndex) => currentIndex !== index)
+    );
   const removeFramework = (index: number) =>
     setFrameworks((current) =>
       current.filter((_, currentIndex) => currentIndex !== index)
@@ -111,21 +196,29 @@ export const ProjectSubmissionForm = () => {
   };
 
   const hasImages = useMemo(
-    () => images.some((image) => image.src.trim().length > 0),
+    () => images.some((image) => Boolean(image.file)),
     [images]
   );
 
   return (
     <form
+      ref={formRef}
       className="space-y-10"
       action={(formData) => {
-        const preparedImages = removeEmptyItems(images);
-        const preparedFrameworks = removeEmptyItems(frameworks);
-        const preparedClouds = removeEmptyItems(cloudProviders);
+        const preparedMetadata = toImageMetadata(images);
+        const preparedFrameworks = toProjectTechnologies(frameworks);
+        const preparedClouds = toProjectCloudProviders(cloudProviders);
 
-        formData.set("images", JSON.stringify(preparedImages));
+        formData.set("imageMetadata", JSON.stringify(preparedMetadata));
         formData.set("frameworks", JSON.stringify(preparedFrameworks));
         formData.set("cloud", JSON.stringify(preparedClouds));
+
+        images
+          .map((image) => image.file)
+          .filter((file): file is File => Boolean(file))
+          .forEach((file) => {
+            formData.append("imageFiles", file);
+          });
 
         setStatus({ type: "idle", message: "" });
         startTransition(async () => {
@@ -136,31 +229,39 @@ export const ProjectSubmissionForm = () => {
           });
           if (response.success) {
             resetForm();
-            (document.getElementById("project-form") as HTMLFormElement | null)?.reset();
+            formRef.current?.reset();
           }
         });
       }}
-      id="project-form"
     >
       <section className="grid gap-6 md:grid-cols-2">
+        {requireToken && (
+          <div className="space-y-2">
+            <label
+              className="block text-sm font-semibold text-gray-200"
+              htmlFor="token"
+            >
+              Submission token
+            </label>
+            <input
+              required
+              name="token"
+              id="token"
+              type="password"
+              className="w-full rounded-lg border border-gray-700 bg-gray-900 px-4 py-2 text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+              placeholder="Enter the secret token"
+            />
+            <p className="text-xs text-gray-400">
+              Define <code>PROJECT_SUBMISSION_TOKEN</code> in your environment
+              and use it here to protect the form.
+            </p>
+          </div>
+        )}
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-200" htmlFor="token">
-            Submission token
-          </label>
-          <input
-            required
-            name="token"
-            id="token"
-            type="password"
-            className="w-full rounded-lg border border-gray-700 bg-gray-900 px-4 py-2 text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
-            placeholder="Enter the secret token"
-          />
-          <p className="text-xs text-gray-400">
-            Define <code>PROJECT_SUBMISSION_TOKEN</code> in your environment and use it here to protect the form.
-          </p>
-        </div>
-        <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-200" htmlFor="id">
+          <label
+            className="block text-sm font-semibold text-gray-200"
+            htmlFor="id"
+          >
             Project ID (slug)
           </label>
           <input
@@ -173,11 +274,15 @@ export const ProjectSubmissionForm = () => {
             placeholder="e.g. nextjs-portfolio"
           />
           <p className="text-xs text-gray-400">
-            Lowercase letters, numbers, and hyphens only. This becomes the URL path.
+            Lowercase letters, numbers, and hyphens only. This becomes the URL
+            path.
           </p>
         </div>
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-200" htmlFor="name">
+          <label
+            className="block text-sm font-semibold text-gray-200"
+            htmlFor="name"
+          >
             Project name
           </label>
           <input
@@ -190,7 +295,10 @@ export const ProjectSubmissionForm = () => {
           />
         </div>
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-200" htmlFor="link">
+          <label
+            className="block text-sm font-semibold text-gray-200"
+            htmlFor="link"
+          >
             Live link (optional)
           </label>
           <input
@@ -204,7 +312,10 @@ export const ProjectSubmissionForm = () => {
       </section>
 
       <div className="space-y-2">
-        <label className="block text-sm font-semibold text-gray-200" htmlFor="description">
+        <label
+          className="block text-sm font-semibold text-gray-200"
+          htmlFor="description"
+        >
           Project description
         </label>
         <textarea
@@ -218,7 +329,10 @@ export const ProjectSubmissionForm = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-semibold text-gray-200" htmlFor="remark">
+        <label
+          className="block text-sm font-semibold text-gray-200"
+          htmlFor="remark"
+        >
           Personal contribution (optional)
         </label>
         <textarea
@@ -232,7 +346,9 @@ export const ProjectSubmissionForm = () => {
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-100">Project images</h2>
+          <h2 className="text-lg font-semibold text-gray-100">
+            Project images
+          </h2>
           <button
             type="button"
             className="rounded-lg border border-orange-600 px-3 py-1 text-sm font-medium text-orange-400 transition hover:bg-orange-600/10"
@@ -242,7 +358,9 @@ export const ProjectSubmissionForm = () => {
           </button>
         </div>
         <p className="text-xs text-gray-400">
-          Provide at least one image to feature the project. Images are displayed in the preview carousel.
+          Provide at least one image to feature the project. Files are uploaded
+          to your Supabase bucket automatically and shown in the preview
+          carousel.
         </p>
         <div className="space-y-4">
           {images.map((image, index) => (
@@ -253,15 +371,22 @@ export const ProjectSubmissionForm = () => {
               <div className="flex flex-col gap-4 md:flex-row">
                 <div className="flex-1 space-y-2">
                   <label className="block text-xs font-semibold uppercase tracking-wide text-gray-400">
-                    Image URL
+                    Project image
                   </label>
                   <input
-                    required={!hasImages}
-                    value={image.src}
-                    onChange={(event) => handleImageChange(index, "src", event.target.value)}
-                    placeholder="https://"
-                    className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                    required={!hasImages && index === 0}
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) =>
+                      handleImageFileChange(index, event.target.files)
+                    }
+                    className="w-full cursor-pointer rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40 file:mr-4 file:cursor-pointer file:rounded-md file:border-0 file:bg-orange-600 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-white hover:file:bg-orange-500"
                   />
+                  <p className="text-xs text-gray-500">
+                    {image.fileName
+                      ? `Selected: ${image.fileName}`
+                      : "PNG, JPG, or WEBP images work best."}
+                  </p>
                 </div>
                 <div className="grid flex-shrink-0 grid-cols-2 gap-4 md:w-56">
                   <div className="space-y-2">
@@ -271,7 +396,13 @@ export const ProjectSubmissionForm = () => {
                     <input
                       type="number"
                       value={image.width}
-                      onChange={(event) => handleImageChange(index, "width", event.target.value)}
+                      onChange={(event) =>
+                        handleImageDimensionChange(
+                          index,
+                          "width",
+                          event.target.value
+                        )
+                      }
                       className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
                     />
                   </div>
@@ -282,7 +413,13 @@ export const ProjectSubmissionForm = () => {
                     <input
                       type="number"
                       value={image.height}
-                      onChange={(event) => handleImageChange(index, "height", event.target.value)}
+                      onChange={(event) =>
+                        handleImageDimensionChange(
+                          index,
+                          "height",
+                          event.target.value
+                        )
+                      }
                       className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
                     />
                   </div>
@@ -306,7 +443,9 @@ export const ProjectSubmissionForm = () => {
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-100">Frameworks & libraries</h2>
+          <h2 className="text-lg font-semibold text-gray-100">
+            Frameworks & libraries
+          </h2>
           <button
             type="button"
             className="rounded-lg border border-orange-600 px-3 py-1 text-sm font-medium text-orange-400 transition hover:bg-orange-600/10"
@@ -321,8 +460,8 @@ export const ProjectSubmissionForm = () => {
               key={`framework-${index}`}
               className="rounded-xl border border-gray-800 bg-gray-900/70 p-4 shadow-inner"
             >
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
+              <div className="grid gap-4 md:grid-cols-4">
+                <div className="space-y-2 md:col-span-2">
                   <label className="block text-xs font-semibold uppercase tracking-wide text-gray-400">
                     Name
                   </label>
@@ -345,7 +484,7 @@ export const ProjectSubmissionForm = () => {
                       handleFrameworkChange(index, "Image", event.target.value)
                     }
                     className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
-                    placeholder="/next.png"
+                    placeholder="/next.svg"
                   />
                 </div>
                 <div className="space-y-2">
@@ -393,7 +532,9 @@ export const ProjectSubmissionForm = () => {
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-100">Cloud & infrastructure</h2>
+          <h2 className="text-lg font-semibold text-gray-100">
+            Cloud providers
+          </h2>
           <button
             type="button"
             className="rounded-lg border border-orange-600 px-3 py-1 text-sm font-medium text-orange-400 transition hover:bg-orange-600/10"
@@ -408,8 +549,8 @@ export const ProjectSubmissionForm = () => {
               key={`cloud-${index}`}
               className="rounded-xl border border-gray-800 bg-gray-900/70 p-4 shadow-inner"
             >
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
+              <div className="grid gap-4 md:grid-cols-4">
+                <div className="space-y-2 md:col-span-2">
                   <label className="block text-xs font-semibold uppercase tracking-wide text-gray-400">
                     Name
                   </label>

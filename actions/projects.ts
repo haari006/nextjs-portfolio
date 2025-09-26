@@ -1,12 +1,18 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import type {
   ProjectCloudProvider,
   ProjectImage,
   ProjectTechnology,
 } from "@/constants/type";
+import { uploadProjectImage } from "@/lib/projectImages";
 import { saveProject } from "@/lib/projectStore";
+import {
+  PROJECT_SUBMISSION_COOKIE_NAME,
+  PROJECT_SUBMISSION_COOKIE_VALUE,
+} from "@/lib/projectSubmissionAuth";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 export interface ProjectActionResponse {
   success: boolean;
@@ -36,14 +42,86 @@ const parseJsonArray = <T>(
 const normalizeText = (value: FormDataEntryValue | null) =>
   typeof value === "string" ? value.trim() : "";
 
+interface SubmittedImageMetadata {
+  width?: number | string;
+  height?: number | string;
+}
+
+const normalizeDimensionValue = (
+  value: number | string | undefined,
+  fallback: number
+) => {
+  if (typeof value === "number") {
+    return Number.isFinite(value) && value > 0 ? value : fallback;
+  }
+
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+  }
+
+  return fallback;
+};
+
+const isAuthorizedRequest = () =>
+  cookies().get(PROJECT_SUBMISSION_COOKIE_NAME)?.value ===
+  PROJECT_SUBMISSION_COOKIE_VALUE;
+
+const ensureToken = (token: string): ProjectActionResponse | undefined => {
+  if (!process.env.PROJECT_SUBMISSION_TOKEN) {
+    return {
+      success: false,
+      message:
+        "Project submissions are disabled. Define PROJECT_SUBMISSION_TOKEN to enable access.",
+    };
+  }
+
+  if (!token || token !== process.env.PROJECT_SUBMISSION_TOKEN) {
+    return { success: false, message: "Invalid submission token." };
+  }
+
+  return undefined;
+};
+
+export const authorizeProjectSubmission = async (
+  formData: FormData
+): Promise<ProjectActionResponse> => {
+  const token = normalizeText(formData.get("token"));
+
+  const failure = ensureToken(token);
+  if (failure) {
+    return failure;
+  }
+
+  cookies().set(
+    PROJECT_SUBMISSION_COOKIE_NAME,
+    PROJECT_SUBMISSION_COOKIE_VALUE,
+    {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24,
+    }
+  );
+
+  return {
+    success: true,
+    message: "Authorization confirmed. You can now add a project.",
+  };
+};
+
 const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export const createProject = async (
   formData: FormData
 ): Promise<ProjectActionResponse> => {
-  const token = normalizeText(formData.get("token"));
-  if (!token || token !== process.env.PROJECT_SUBMISSION_TOKEN) {
-    return { success: false, message: "Invalid submission token." };
+  if (!isAuthorizedRequest()) {
+    const token = normalizeText(formData.get("token"));
+    const failure = ensureToken(token);
+    if (failure) {
+      return failure;
+    }
   }
 
   const id = normalizeText(formData.get("id"));
@@ -72,7 +150,10 @@ export const createProject = async (
     return { success: false, message: "Please provide a project description." };
   }
 
-  const imagesResult = parseJsonArray<ProjectImage>(formData.get("images"), "images");
+  const metadataResult = parseJsonArray<SubmittedImageMetadata>(
+    formData.get("imageMetadata"),
+    "image metadata"
+  );
   const frameworksResult = parseJsonArray<ProjectTechnology>(
     formData.get("frameworks"),
     "frameworks"
@@ -82,13 +163,65 @@ export const createProject = async (
     "cloud providers"
   );
 
-  if (imagesResult.error || frameworksResult.error || cloudResult.error) {
+  if (metadataResult.error || frameworksResult.error || cloudResult.error) {
     return {
       success: false,
       message:
-        imagesResult.error || frameworksResult.error || cloudResult.error ||
+        metadataResult.error ||
+        frameworksResult.error ||
+        cloudResult.error ||
         "The submitted project includes invalid JSON data.",
     };
+  }
+
+  const imageFiles = formData
+    .getAll("imageFiles")
+    .filter((value): value is File => value instanceof File && value.size > 0);
+
+  if (imageFiles.length === 0) {
+    return {
+      success: false,
+      message: "Please upload at least one project image.",
+    };
+  }
+
+  const imageMetadata = metadataResult.value.map((item) => ({
+    width: Math.round(normalizeDimensionValue(item.width, 1600)),
+    height: Math.round(normalizeDimensionValue(item.height, 900)),
+  }));
+
+  if (imageMetadata.length !== imageFiles.length) {
+    return {
+      success: false,
+      message: "Image details are missing. Please attach your images again.",
+    };
+  }
+
+  const uploadedImages: ProjectImage[] = [];
+
+  for (let index = 0; index < imageFiles.length; index++) {
+    const file = imageFiles[index];
+    const { width, height } = imageMetadata[index];
+
+    const uploadResult = await uploadProjectImage({
+      projectId: id,
+      file,
+    });
+
+    if (!uploadResult.success || !uploadResult.url) {
+      return {
+        success: false,
+        message:
+          uploadResult.message ??
+          "Unable to upload the provided project images.",
+      };
+    }
+
+    uploadedImages.push({
+      src: uploadResult.url,
+      width,
+      height,
+    });
   }
 
   const result = await saveProject({
@@ -97,7 +230,7 @@ export const createProject = async (
     description,
     remark,
     link: link || undefined,
-    images: imagesResult.value,
+    images: uploadedImages,
     frameworks: frameworksResult.value,
     cloud: cloudResult.value,
   });

@@ -8,14 +8,10 @@ import type {
 } from "@/constants/type";
 import { promises as fs } from "fs";
 import path from "path";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import { getSupabaseClient } from "./supabaseClient";
 
 const dataDir = path.join(process.cwd(), "data");
 const projectsFilePath = path.join(dataDir, "projects.json");
-
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 interface SupabaseProjectRow {
   id: string;
@@ -28,63 +24,6 @@ interface SupabaseProjectRow {
   cloud: ProjectCloudProvider[] | null;
   created_at?: string;
 }
-
-const hasSupabaseReadConfig = Boolean(supabaseUrl && supabaseAnonKey);
-const hasSupabaseWriteConfig = Boolean(supabaseUrl && supabaseServiceRoleKey);
-
-type SupabaseModule = typeof import("@supabase/supabase-js");
-
-let supabaseModulePromise: Promise<SupabaseModule | null> | null = null;
-let cachedSupabaseModule: SupabaseModule | null = null;
-
-const loadSupabaseModule = async (): Promise<SupabaseModule | null> => {
-  if (cachedSupabaseModule) {
-    return cachedSupabaseModule;
-  }
-
-  if (!supabaseModulePromise) {
-    supabaseModulePromise = import("@supabase/supabase-js")
-      .then((module) => {
-        cachedSupabaseModule = module;
-        return module;
-      })
-      .catch((error: unknown) => {
-        console.warn(
-          "@supabase/supabase-js is not available, falling back to local storage.",
-          error
-        );
-        return null;
-      });
-  }
-
-  return supabaseModulePromise;
-};
-
-const getSupabaseClient = async (
-  mode: "read" | "write"
-): Promise<SupabaseClient | null> => {
-  if (mode === "read" && !hasSupabaseReadConfig) {
-    return null;
-  }
-
-  if (mode === "write" && !hasSupabaseWriteConfig) {
-    return null;
-  }
-
-  const supabaseModule = await loadSupabaseModule();
-  if (!supabaseModule) {
-    return null;
-  }
-
-  const key = mode === "read" ? supabaseAnonKey : supabaseServiceRoleKey;
-  if (!supabaseUrl || !key) {
-    return null;
-  }
-
-  return supabaseModule.createClient(supabaseUrl, key, {
-    auth: { persistSession: false },
-  });
-};
 
 const toProject = (row: SupabaseProjectRow): Planet => ({
   id: row.id,
@@ -127,7 +66,11 @@ const readLocalProjects = async (): Promise<Planet[]> => {
 
 const writeLocalProjects = async (projects: Planet[]) => {
   await ensureDataDirectory();
-  await fs.writeFile(projectsFilePath, JSON.stringify(projects, null, 2), "utf8");
+  await fs.writeFile(
+    projectsFilePath,
+    JSON.stringify(projects, null, 2),
+    "utf8"
+  );
 };
 
 export const fetchProjects = async (): Promise<Planet[]> => {
@@ -144,7 +87,10 @@ export const fetchProjects = async (): Promise<Planet[]> => {
       .order("created_at", { ascending: false });
 
     if (error) {
-      console.warn("Falling back to local projects due to Supabase error", error);
+      console.warn(
+        "Falling back to local projects due to Supabase error",
+        error
+      );
       return readLocalProjects();
     }
 
@@ -155,7 +101,10 @@ export const fetchProjects = async (): Promise<Planet[]> => {
     const projects = data.map(toProject);
     return mergeProjects(Planets, projects);
   } catch (error) {
-    console.warn("Falling back to local projects due to Supabase failure", error);
+    console.warn(
+      "Falling back to local projects due to Supabase failure",
+      error
+    );
     return readLocalProjects();
   }
 };
@@ -201,6 +150,9 @@ export const saveProject = async (
     return { success: true };
   } catch (error) {
     console.error("Failed to save project locally", error);
-    return { success: false, message: "Unable to write project to local store." };
+    return {
+      success: false,
+      message: "Unable to write project to local store.",
+    };
   }
 };
