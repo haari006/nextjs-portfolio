@@ -1,18 +1,18 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 import type {
   ProjectCloudProvider,
   ProjectImage,
   ProjectTechnology,
 } from "@/constants/type";
-import { saveProject } from "@/lib/projectStore";
 import { uploadProjectImage } from "@/lib/projectImages";
+import { saveProject } from "@/lib/projectStore";
 import {
   PROJECT_SUBMISSION_COOKIE_NAME,
   PROJECT_SUBMISSION_COOKIE_VALUE,
 } from "@/lib/projectSubmissionAuth";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 export interface ProjectActionResponse {
   success: boolean;
@@ -93,13 +93,17 @@ export const authorizeProjectSubmission = async (
     return failure;
   }
 
-  cookies().set(PROJECT_SUBMISSION_COOKIE_NAME, PROJECT_SUBMISSION_COOKIE_VALUE, {
-    httpOnly: true,
-    sameSite: "strict",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 60 * 60 * 24,
-  });
+  cookies().set(
+    PROJECT_SUBMISSION_COOKIE_NAME,
+    PROJECT_SUBMISSION_COOKIE_VALUE,
+    {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24,
+    }
+  );
 
   return {
     success: true,
@@ -163,7 +167,9 @@ export const createProject = async (
     return {
       success: false,
       message:
-        metadataResult.error || frameworksResult.error || cloudResult.error ||
+        metadataResult.error ||
+        frameworksResult.error ||
+        cloudResult.error ||
         "The submitted project includes invalid JSON data.",
     };
   }
@@ -206,7 +212,8 @@ export const createProject = async (
       return {
         success: false,
         message:
-          uploadResult.message ?? "Unable to upload the provided project images.",
+          uploadResult.message ??
+          "Unable to upload the provided project images.",
       };
     }
 
