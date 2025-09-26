@@ -1,34 +1,38 @@
-import PlanetPreviewComponent from "@/components/sub/PlanetPreview";
-import { Planets } from "@/constants";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import PlanetPreviewComponent from "@/components/sub/PlanetPreview";
+import { fetchProjectById } from "@/lib/projectStore";
 
-  export async function generateMetadata({
-    params,
-  }: {
-    params: { id: string };
-  }): Promise<Metadata> {
-    const { id } = params;
-    const planet: Planet = Planets.find((planet) => planet.id === id)!;
+interface Params {
+  params: { id: string };
+}
 
-    if (!planet) {
-      return {
-        title: "No Planet Found",
-        description: "The requested planet was destroyed by the Death Star",
-      };
-    }
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const project = await fetchProjectById(params.id);
 
+  if (!project) {
     return {
-      title: planet.name as string,
-      description: planet.name as string,
+      title: "Project not found",
+      description: "The project you are looking for does not exist.",
     };
   }
 
-export default function PlanetsPage({params}:{params:{id:string}}) {
-    const {id} = params;
-    const planet: Planet = Planets.find((planet) => planet.id === id)!;
-    return (
-      <div className="flex flex-col gap-20">
-        <PlanetPreviewComponent planet={planet} />
-      </div>
-    );
+  return {
+    title: project.name,
+    description: project.description,
+  };
+}
+
+export default async function PlanetsPage({ params }: Params) {
+  const project = await fetchProjectById(params.id);
+
+  if (!project) {
+    notFound();
   }
+
+  return (
+    <div className="flex flex-col gap-20">
+      <PlanetPreviewComponent planet={project} />
+    </div>
+  );
+}

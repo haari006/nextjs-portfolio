@@ -1,63 +1,60 @@
+import Link from "next/link";
 import ProjectCard from "@/components/sub/ProjectCard";
 import { PlanetTitleText } from "@/components/sub/SkillText";
-import { Metadata } from "next";
+import { fetchProjects } from "@/lib/projectStore";
 
-export const metadata: Metadata = {
-  title: "My Projects",
-  description: "List of projects by Haariharan Rajakumar",
-};
+const placeholderImage = "/project-placeholder.svg";
 
-export default function PlanetsPage() {
+export default async function PlanetsPage() {
+  const projects = await fetchProjects();
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="py-10 px-4 sm:py-16 sm:px-6 lg:py-20 lg:px-8">
-        <PlanetTitleText />
-        <div className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16 px-2 md:px-4 lg:px-8">
-          <ProjectCard
-            src="/worldExpo1.png"
-            title="World Expo 2025 Monitoring Dashboard"
-            description="A web app that provides monitoring of the World Expo 2025, including impressive statistics of their ads and social media presence."
-            link="planets/worldExpo-my"
-          />
-          <ProjectCard
-            src="/insuredSpeaks1.png"
-            title="InsuredSpeaks"
-            description="A web app that allows users to share their insurance experiences and read others' reviews."
-            link="planets/insuredspeaks"
-          />
-          <ProjectCard
-            src="/lifepath1.png"
-            title="LifePath - Educational consulting platform"
-            description="LifePath is an educational consulting platform that connects students with lifepath experts to guide them in their academic and career paths."
-            link="planets/lifepath"
-          />
-          <ProjectCard
-            src="/jp1.PNG"
-            title="Landing Page for Coconut Bussiness"
-            description="A sleek and responsive landing page designed for a coconut business."
-            link="planets/coconut-landing-page"
-          />
-          <ProjectCard
-            src="/maths-generator.jpeg"
-            title="Maths Question Generator"
-            description="A web app that generates math questions for students to practice"
-            link="planets/maths-generator"
-          />
-          <ProjectCard
-            src="/pystorm1.webp"
-            title="Pystorm SaaS App"
-            description="Pystorm is a SaaS app which offers a user-friendly platform tailored for small businesses to simplify data management and visualization."
-            link="planets/pystorm-saas"
-          />
-          <ProjectCard
-            src="/pystorm-dashboard3.jpeg"
-            title="Pystorm Dashboard"
-            description="A web app that supports multi-tenancy, allowing users to view embedded dashboards that was made to visualize organization data"
-            link="planets/pystorm-dashboard"
-          />
+        <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
+          <PlanetTitleText />
+          <Link
+            href="/universe/planets/new"
+            className="inline-flex items-center gap-2 rounded-lg border border-orange-500/60 bg-orange-500/10 px-4 py-2 text-sm font-semibold text-orange-200 transition hover:bg-orange-500/20"
+          >
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 5v14M5 12h14"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Add project
+          </Link>
         </div>
+
+        {projects.length === 0 ? (
+          <div className="mt-16 rounded-2xl border border-gray-800 bg-black/60 p-10 text-center">
+            <p className="text-base text-gray-300">
+              No projects found yet. Use the “Add project” button to publish your first one instantly.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-10 flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16 px-2 md:px-4 lg:px-8">
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                src={project.images?.[0]?.src ?? placeholderImage}
+                title={project.name}
+                description={project.description}
+                link={`planets/${project.id}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 }
-

@@ -21,6 +21,17 @@ To run this portfolio locally, follow these steps:
 3. Start the development server with `npm run dev`.
 4. Open your browser and navigate to `http://localhost:3000`.
 
+#### Quick project submissions (no code editor required)
+
+1. Set the `PROJECT_SUBMISSION_TOKEN` environment variable locally (e.g. in a `.env.local` file) and on your hosting provider. This protects the submission form from public access.
+2. (Optional) To store projects in Supabase instead of the local JSON fallback, add the following environment variables:
+   - `SUPABASE_URL`
+   - `SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   
+   Create a `projects` table with the columns `id`, `name`, `description`, `remark`, `link` (text/varchar) and JSONB columns for `images`, `frameworks`, and `cloud`.
+3. Visit `/universe/planets/new` to open the submission dashboard. Fill out the form and provide the submission token when asked. Projects appear instantly after saving.
+
 ---
 
 ### Features
