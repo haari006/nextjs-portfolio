@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useMemo, useRef, useState, useTransition } from "react";
 import { createProject } from "@/actions/projects";
 import type {
   ProjectCloudProvider,
@@ -13,26 +13,73 @@ interface FormStatus {
   message: string;
 }
 
-const createEmptyImage = (): ProjectImage => ({ src: "", width: 100, height: 100 });
-const createEmptyTechnology = (): ProjectTechnology => ({
+interface ImageField {
+  src: string;
+  width: string;
+  height: string;
+}
+
+interface TechnologyField {
+  name: string;
+  Image: string;
+  width: string;
+  height: string;
+}
+
+interface CloudField {
+  name: string;
+  Image: string;
+  width: string;
+  height: string;
+}
+
+const createEmptyImage = (): ImageField => ({ src: "", width: "", height: "" });
+const createEmptyTechnology = (): TechnologyField => ({
   name: "",
   Image: "",
-  width: 80,
-  height: 80,
+  width: "80",
+  height: "80",
 });
-const createEmptyCloud = (): ProjectCloudProvider => ({
+const createEmptyCloud = (): CloudField => ({
   name: "",
   Image: "",
-  width: 80,
-  height: 80,
+  width: "80",
+  height: "80",
 });
 
-const removeEmptyItems = <T extends object>(items: T[]) =>
-  items.filter((item) =>
-    Object.values(item as Record<string, unknown>).some(
-      (value) => value !== ""
-    )
-  );
+const normalizeDimension = (value: string, fallback: number) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+};
+
+const toProjectImages = (images: ImageField[]): ProjectImage[] =>
+  images
+    .map((image) => ({
+      src: image.src.trim(),
+      width: normalizeDimension(image.width, 1600),
+      height: normalizeDimension(image.height, 900),
+    }))
+    .filter((image) => image.src.length > 0);
+
+const toProjectTechnologies = (technologies: TechnologyField[]): ProjectTechnology[] =>
+  technologies
+    .map((technology) => ({
+      name: technology.name.trim(),
+      Image: technology.Image.trim(),
+      width: normalizeDimension(technology.width, 80),
+      height: normalizeDimension(technology.height, 80),
+    }))
+    .filter((technology) => technology.name.length > 0 || technology.Image.length > 0);
+
+const toProjectCloudProviders = (providers: CloudField[]): ProjectCloudProvider[] =>
+  providers
+    .map((provider) => ({
+      name: provider.name.trim(),
+      Image: provider.Image.trim(),
+      width: normalizeDimension(provider.width, 80),
+      height: normalizeDimension(provider.height, 80),
+    }))
+    .filter((provider) => provider.name.length > 0 || provider.Image.length > 0);
 
 interface ProjectSubmissionFormProps {
   requireToken?: boolean;
@@ -41,25 +88,26 @@ interface ProjectSubmissionFormProps {
 export const ProjectSubmissionForm = ({
   requireToken = true,
 }: ProjectSubmissionFormProps) => {
-  const [images, setImages] = useState<ProjectImage[]>([createEmptyImage()]);
-  const [frameworks, setFrameworks] = useState<ProjectTechnology[]>([
+  const [images, setImages] = useState<ImageField[]>([createEmptyImage()]);
+  const [frameworks, setFrameworks] = useState<TechnologyField[]>([
     createEmptyTechnology(),
   ]);
-  const [cloudProviders, setCloudProviders] = useState<ProjectCloudProvider[]>([
+  const [cloudProviders, setCloudProviders] = useState<CloudField[]>([
     createEmptyCloud(),
   ]);
   const [status, setStatus] = useState<FormStatus>({ type: "idle", message: "" });
   const [isPending, startTransition] = useTransition();
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const handleImageChange = (
     index: number,
-    key: keyof ProjectImage,
+    key: keyof ImageField,
     value: string
   ) => {
     setImages((current) =>
       current.map((image, currentIndex) =>
         currentIndex === index
-          ? { ...image, [key]: key === "src" ? value : Number(value) }
+          ? { ...image, [key]: value }
           : image
       )
     );
@@ -67,13 +115,13 @@ export const ProjectSubmissionForm = ({
 
   const handleFrameworkChange = (
     index: number,
-    key: keyof ProjectTechnology,
+    key: keyof TechnologyField,
     value: string
   ) => {
     setFrameworks((current) =>
       current.map((item, currentIndex) =>
         currentIndex === index
-          ? { ...item, [key]: key === "name" || key === "Image" ? value : Number(value) }
+          ? { ...item, [key]: value }
           : item
       )
     );
@@ -81,13 +129,13 @@ export const ProjectSubmissionForm = ({
 
   const handleCloudChange = (
     index: number,
-    key: keyof ProjectCloudProvider,
+    key: keyof CloudField,
     value: string
   ) => {
     setCloudProviders((current) =>
       current.map((item, currentIndex) =>
         currentIndex === index
-          ? { ...item, [key]: key === "name" || key === "Image" ? value : Number(value) }
+          ? { ...item, [key]: value }
           : item
       )
     );
@@ -124,10 +172,11 @@ export const ProjectSubmissionForm = ({
   return (
     <form
       className="space-y-10"
+      ref={formRef}
       action={(formData) => {
-        const preparedImages = removeEmptyItems(images);
-        const preparedFrameworks = removeEmptyItems(frameworks);
-        const preparedClouds = removeEmptyItems(cloudProviders);
+        const preparedImages = toProjectImages(images);
+        const preparedFrameworks = toProjectTechnologies(frameworks);
+        const preparedClouds = toProjectCloudProviders(cloudProviders);
 
         formData.set("images", JSON.stringify(preparedImages));
         formData.set("frameworks", JSON.stringify(preparedFrameworks));
@@ -142,11 +191,10 @@ export const ProjectSubmissionForm = ({
           });
           if (response.success) {
             resetForm();
-            (document.getElementById("project-form") as HTMLFormElement | null)?.reset();
+            formRef.current?.reset();
           }
         });
       }}
-      id="project-form"
     >
       <section className="grid gap-6 md:grid-cols-2">
         {requireToken && (
