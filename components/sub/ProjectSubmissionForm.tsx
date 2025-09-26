@@ -139,9 +139,7 @@ export const ProjectSubmissionForm = ({
   ) => {
     setFrameworks((current) =>
       current.map((item, currentIndex) =>
-        currentIndex === index
-          ? { ...item, [key]: value }
-          : item
+        currentIndex === index ? { ...item, [key]: value } : item
       )
     );
   };
@@ -153,9 +151,7 @@ export const ProjectSubmissionForm = ({
   ) => {
     setCloudProviders((current) =>
       current.map((item, currentIndex) =>
-        currentIndex === index
-          ? { ...item, [key]: value }
-          : item
+        currentIndex === index ? { ...item, [key]: value } : item
       )
     );
   };
@@ -190,8 +186,8 @@ export const ProjectSubmissionForm = ({
 
   return (
     <form
-      className="space-y-10"
       ref={formRef}
+      className="space-y-10"
       action={(formData) => {
         const preparedMetadata = toImageMetadata(images);
         const preparedFrameworks = toProjectTechnologies(frameworks);
@@ -324,8 +320,7 @@ export const ProjectSubmissionForm = ({
           </button>
         </div>
         <p className="text-xs text-gray-400">
-          Provide at least one image to feature the project. Files are uploaded to your Supabase bucket automatically and shown
-          in the preview carousel.
+          Provide at least one image to feature the project. Files are uploaded to your Supabase bucket automatically and shown in the preview carousel.
         </p>
         <div className="space-y-4">
           {images.map((image, index) => (
@@ -411,8 +406,8 @@ export const ProjectSubmissionForm = ({
               key={`framework-${index}`}
               className="rounded-xl border border-gray-800 bg-gray-900/70 p-4 shadow-inner"
             >
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
+              <div className="grid gap-4 md:grid-cols-4">
+                <div className="space-y-2 md:col-span-2">
                   <label className="block text-xs font-semibold uppercase tracking-wide text-gray-400">
                     Name
                   </label>
@@ -435,7 +430,7 @@ export const ProjectSubmissionForm = ({
                       handleFrameworkChange(index, "Image", event.target.value)
                     }
                     className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
-                    placeholder="/next.png"
+                    placeholder="/next.svg"
                   />
                 </div>
                 <div className="space-y-2">
@@ -483,7 +478,7 @@ export const ProjectSubmissionForm = ({
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-100">Cloud & infrastructure</h2>
+          <h2 className="text-lg font-semibold text-gray-100">Cloud providers</h2>
           <button
             type="button"
             className="rounded-lg border border-orange-600 px-3 py-1 text-sm font-medium text-orange-400 transition hover:bg-orange-600/10"
@@ -498,8 +493,8 @@ export const ProjectSubmissionForm = ({
               key={`cloud-${index}`}
               className="rounded-xl border border-gray-800 bg-gray-900/70 p-4 shadow-inner"
             >
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
+              <div className="grid gap-4 md:grid-cols-4">
+                <div className="space-y-2 md:col-span-2">
                   <label className="block text-xs font-semibold uppercase tracking-wide text-gray-400">
                     Name
                   </label>
