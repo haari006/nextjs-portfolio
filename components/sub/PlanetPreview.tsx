@@ -77,7 +77,7 @@ const PlanetPreviewComponent = ({ planet }: { planet: Planet }) => {
               <div className="border-b border-gray-700/50 px-6">
                 <Tab.List className="flex space-x-8 -mb-px">
                   <Tab
-                    className={({ selected }) =>
+                    className={({ selected }:any) =>
                       classNames(
                         selected
                           ? "border-orange-500 text-orange-400 bg-orange-500/10"
@@ -89,7 +89,7 @@ const PlanetPreviewComponent = ({ planet }: { planet: Planet }) => {
                     Frameworks
                   </Tab>
                   <Tab
-                    className={({ selected }) =>
+                    className={({ selected }:any) =>
                       classNames(
                         selected
                           ? "border-orange-500 text-orange-400 bg-orange-500/10"

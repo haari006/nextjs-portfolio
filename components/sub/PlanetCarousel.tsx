@@ -3,7 +3,11 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const PlanetCarousel = ({ images }: { images: Image[] }) => {
+const PlanetCarousel = ({ images }: { images: {
+  src: string;
+  width: number;
+  height: number;
+}[] }) => {
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -39,7 +43,7 @@ const PlanetCarousel = ({ images }: { images: Image[] }) => {
             {images.map((img, index) => (
               <Image
                 key={index}
-                src={img}
+                src={img.src}
                 alt={`Slide ${index}`}
                 className="w-full h-auto flex-shrink-0"
                 onLoad={() => setLoading(false)} 
