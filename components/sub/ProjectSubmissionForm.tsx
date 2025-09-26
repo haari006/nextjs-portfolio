@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useRef, useState, useTransition } from "react";
 import { createProject } from "@/actions/projects";
 import type {
   ProjectCloudProvider,
   ProjectImage,
   ProjectTechnology,
 } from "@/constants/type";
+import { useMemo, useRef, useState, useTransition } from "react";
 
 interface FormStatus {
   type: "idle" | "success" | "error";
@@ -58,7 +58,9 @@ const normalizeDimension = (value: string, fallback: number) => {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 };
 
-const toImageMetadata = (images: ImageField[]): Pick<ProjectImage, "width" | "height">[] =>
+const toImageMetadata = (
+  images: ImageField[]
+): Pick<ProjectImage, "width" | "height">[] =>
   images
     .filter((image) => image.file)
     .map((image) => ({
@@ -66,7 +68,9 @@ const toImageMetadata = (images: ImageField[]): Pick<ProjectImage, "width" | "he
       height: normalizeDimension(image.height, 900),
     }));
 
-const toProjectTechnologies = (technologies: TechnologyField[]): ProjectTechnology[] =>
+const toProjectTechnologies = (
+  technologies: TechnologyField[]
+): ProjectTechnology[] =>
   technologies
     .map((technology) => ({
       name: technology.name.trim(),
@@ -74,9 +78,13 @@ const toProjectTechnologies = (technologies: TechnologyField[]): ProjectTechnolo
       width: normalizeDimension(technology.width, 80),
       height: normalizeDimension(technology.height, 80),
     }))
-    .filter((technology) => technology.name.length > 0 || technology.Image.length > 0);
+    .filter(
+      (technology) => technology.name.length > 0 || technology.Image.length > 0
+    );
 
-const toProjectCloudProviders = (providers: CloudField[]): ProjectCloudProvider[] =>
+const toProjectCloudProviders = (
+  providers: CloudField[]
+): ProjectCloudProvider[] =>
   providers
     .map((provider) => ({
       name: provider.name.trim(),
@@ -84,7 +92,9 @@ const toProjectCloudProviders = (providers: CloudField[]): ProjectCloudProvider[
       width: normalizeDimension(provider.width, 80),
       height: normalizeDimension(provider.height, 80),
     }))
-    .filter((provider) => provider.name.length > 0 || provider.Image.length > 0);
+    .filter(
+      (provider) => provider.name.length > 0 || provider.Image.length > 0
+    );
 
 interface ProjectSubmissionFormProps {
   requireToken?: boolean;
@@ -100,7 +110,10 @@ export const ProjectSubmissionForm = ({
   const [cloudProviders, setCloudProviders] = useState<CloudField[]>([
     createEmptyCloud(),
   ]);
-  const [status, setStatus] = useState<FormStatus>({ type: "idle", message: "" });
+  const [status, setStatus] = useState<FormStatus>({
+    type: "idle",
+    message: "",
+  });
   const [isPending, startTransition] = useTransition();
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -156,14 +169,17 @@ export const ProjectSubmissionForm = ({
     );
   };
 
-  const addImage = () => setImages((current) => [...current, createEmptyImage()]);
+  const addImage = () =>
+    setImages((current) => [...current, createEmptyImage()]);
   const addFramework = () =>
     setFrameworks((current) => [...current, createEmptyTechnology()]);
   const addCloud = () =>
     setCloudProviders((current) => [...current, createEmptyCloud()]);
 
   const removeImage = (index: number) =>
-    setImages((current) => current.filter((_, currentIndex) => currentIndex !== index));
+    setImages((current) =>
+      current.filter((_, currentIndex) => currentIndex !== index)
+    );
   const removeFramework = (index: number) =>
     setFrameworks((current) =>
       current.filter((_, currentIndex) => currentIndex !== index)
@@ -221,7 +237,10 @@ export const ProjectSubmissionForm = ({
       <section className="grid gap-6 md:grid-cols-2">
         {requireToken && (
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-200" htmlFor="token">
+            <label
+              className="block text-sm font-semibold text-gray-200"
+              htmlFor="token"
+            >
               Submission token
             </label>
             <input
@@ -233,12 +252,16 @@ export const ProjectSubmissionForm = ({
               placeholder="Enter the secret token"
             />
             <p className="text-xs text-gray-400">
-              Define <code>PROJECT_SUBMISSION_TOKEN</code> in your environment and use it here to protect the form.
+              Define <code>PROJECT_SUBMISSION_TOKEN</code> in your environment
+              and use it here to protect the form.
             </p>
           </div>
         )}
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-200" htmlFor="id">
+          <label
+            className="block text-sm font-semibold text-gray-200"
+            htmlFor="id"
+          >
             Project ID (slug)
           </label>
           <input
@@ -251,11 +274,15 @@ export const ProjectSubmissionForm = ({
             placeholder="e.g. nextjs-portfolio"
           />
           <p className="text-xs text-gray-400">
-            Lowercase letters, numbers, and hyphens only. This becomes the URL path.
+            Lowercase letters, numbers, and hyphens only. This becomes the URL
+            path.
           </p>
         </div>
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-200" htmlFor="name">
+          <label
+            className="block text-sm font-semibold text-gray-200"
+            htmlFor="name"
+          >
             Project name
           </label>
           <input
@@ -268,7 +295,10 @@ export const ProjectSubmissionForm = ({
           />
         </div>
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-200" htmlFor="link">
+          <label
+            className="block text-sm font-semibold text-gray-200"
+            htmlFor="link"
+          >
             Live link (optional)
           </label>
           <input
@@ -282,7 +312,10 @@ export const ProjectSubmissionForm = ({
       </section>
 
       <div className="space-y-2">
-        <label className="block text-sm font-semibold text-gray-200" htmlFor="description">
+        <label
+          className="block text-sm font-semibold text-gray-200"
+          htmlFor="description"
+        >
           Project description
         </label>
         <textarea
@@ -296,7 +329,10 @@ export const ProjectSubmissionForm = ({
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-semibold text-gray-200" htmlFor="remark">
+        <label
+          className="block text-sm font-semibold text-gray-200"
+          htmlFor="remark"
+        >
           Personal contribution (optional)
         </label>
         <textarea
@@ -310,7 +346,9 @@ export const ProjectSubmissionForm = ({
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-100">Project images</h2>
+          <h2 className="text-lg font-semibold text-gray-100">
+            Project images
+          </h2>
           <button
             type="button"
             className="rounded-lg border border-orange-600 px-3 py-1 text-sm font-medium text-orange-400 transition hover:bg-orange-600/10"
@@ -320,7 +358,9 @@ export const ProjectSubmissionForm = ({
           </button>
         </div>
         <p className="text-xs text-gray-400">
-          Provide at least one image to feature the project. Files are uploaded to your Supabase bucket automatically and shown in the preview carousel.
+          Provide at least one image to feature the project. Files are uploaded
+          to your Supabase bucket automatically and shown in the preview
+          carousel.
         </p>
         <div className="space-y-4">
           {images.map((image, index) => (
@@ -337,11 +377,15 @@ export const ProjectSubmissionForm = ({
                     required={!hasImages && index === 0}
                     type="file"
                     accept="image/*"
-                    onChange={(event) => handleImageFileChange(index, event.target.files)}
+                    onChange={(event) =>
+                      handleImageFileChange(index, event.target.files)
+                    }
                     className="w-full cursor-pointer rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40 file:mr-4 file:cursor-pointer file:rounded-md file:border-0 file:bg-orange-600 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-white hover:file:bg-orange-500"
                   />
                   <p className="text-xs text-gray-500">
-                    {image.fileName ? `Selected: ${image.fileName}` : "PNG, JPG, or WEBP images work best."}
+                    {image.fileName
+                      ? `Selected: ${image.fileName}`
+                      : "PNG, JPG, or WEBP images work best."}
                   </p>
                 </div>
                 <div className="grid flex-shrink-0 grid-cols-2 gap-4 md:w-56">
@@ -353,7 +397,11 @@ export const ProjectSubmissionForm = ({
                       type="number"
                       value={image.width}
                       onChange={(event) =>
-                        handleImageDimensionChange(index, "width", event.target.value)
+                        handleImageDimensionChange(
+                          index,
+                          "width",
+                          event.target.value
+                        )
                       }
                       className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
                     />
@@ -366,7 +414,11 @@ export const ProjectSubmissionForm = ({
                       type="number"
                       value={image.height}
                       onChange={(event) =>
-                        handleImageDimensionChange(index, "height", event.target.value)
+                        handleImageDimensionChange(
+                          index,
+                          "height",
+                          event.target.value
+                        )
                       }
                       className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
                     />
@@ -391,7 +443,9 @@ export const ProjectSubmissionForm = ({
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-100">Frameworks & libraries</h2>
+          <h2 className="text-lg font-semibold text-gray-100">
+            Frameworks & libraries
+          </h2>
           <button
             type="button"
             className="rounded-lg border border-orange-600 px-3 py-1 text-sm font-medium text-orange-400 transition hover:bg-orange-600/10"
@@ -478,7 +532,9 @@ export const ProjectSubmissionForm = ({
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-100">Cloud providers</h2>
+          <h2 className="text-lg font-semibold text-gray-100">
+            Cloud providers
+          </h2>
           <button
             type="button"
             className="rounded-lg border border-orange-600 px-3 py-1 text-sm font-medium text-orange-400 transition hover:bg-orange-600/10"

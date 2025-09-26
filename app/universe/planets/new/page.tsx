@@ -1,11 +1,11 @@
-import { Metadata } from "next";
-import { cookies } from "next/headers";
 import ProjectSubmissionForm from "@/components/sub/ProjectSubmissionForm";
 import ProjectSubmissionGate from "@/components/sub/ProjectSubmissionGate";
 import {
   PROJECT_SUBMISSION_COOKIE_NAME,
   PROJECT_SUBMISSION_COOKIE_VALUE,
 } from "@/lib/projectSubmissionAuth";
+import { Metadata } from "next";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Submit a project",
@@ -26,7 +26,9 @@ export default function NewProjectPage() {
             Add a new project
           </h1>
           <p className="mx-auto max-w-2xl text-sm text-gray-300 sm:text-base">
-            Use this form to publish a project instantly. Unlock it with your personal submission token so that only you (or trusted collaborators) can add new work without opening your code editor.
+            Use this form to publish a project instantly. Unlock it with your
+            personal submission token so that only you (or trusted
+            collaborators) can add new work without opening your code editor.
           </p>
         </header>
 
@@ -39,19 +41,33 @@ export default function NewProjectPage() {
         </div>
 
         <section className="rounded-2xl border border-orange-500/40 bg-orange-500/10 p-6 text-sm text-orange-100">
-          <h2 className="mb-2 text-base font-semibold uppercase tracking-wide">How it works</h2>
+          <h2 className="mb-2 text-base font-semibold uppercase tracking-wide">
+            How it works
+          </h2>
           <ol className="list-decimal space-y-2 pl-4 text-orange-100/90">
             <li>
-              Set the <code className="rounded bg-black/40 px-1 py-0.5">PROJECT_SUBMISSION_TOKEN</code> environment variable on your hosting provider. This value protects the form from public use.
+              Set the{" "}
+              <code className="rounded bg-black/40 px-1 py-0.5">
+                PROJECT_SUBMISSION_TOKEN
+              </code>{" "}
+              environment variable on your hosting provider. This value protects
+              the form from public use.
             </li>
             <li>
-              Visit this page and enter the same token to unlock the submission form. Your browser stays authorized for 24 hours.
+              Visit this page and enter the same token to unlock the submission
+              form. Your browser stays authorized for 24 hours.
             </li>
             <li>
-              (Optional) Connect a Supabase project, create a <code>projects</code> table with JSONB columns for <em>images</em>, <em>frameworks</em>, and <em>cloud</em>, and provision a public storage bucket (e.g. <code>project-images</code>). Add the URL, keys, and bucket name to your environment so uploads are stored centrally.
+              (Optional) Connect a Supabase project, create a{" "}
+              <code>projects</code> table with JSONB columns for <em>images</em>
+              , <em>frameworks</em>, and <em>cloud</em>, and provision a public
+              storage bucket (e.g. <code>project-images</code>). Add the URL,
+              keys, and bucket name to your environment so uploads are stored
+              centrally.
             </li>
             <li>
-              Fill out the form and submit. The portfolio revalidates automatically so the new project appears right away.
+              Fill out the form and submit. The portfolio revalidates
+              automatically so the new project appears right away.
             </li>
           </ol>
         </section>

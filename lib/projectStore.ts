@@ -66,7 +66,11 @@ const readLocalProjects = async (): Promise<Planet[]> => {
 
 const writeLocalProjects = async (projects: Planet[]) => {
   await ensureDataDirectory();
-  await fs.writeFile(projectsFilePath, JSON.stringify(projects, null, 2), "utf8");
+  await fs.writeFile(
+    projectsFilePath,
+    JSON.stringify(projects, null, 2),
+    "utf8"
+  );
 };
 
 export const fetchProjects = async (): Promise<Planet[]> => {
@@ -83,7 +87,10 @@ export const fetchProjects = async (): Promise<Planet[]> => {
       .order("created_at", { ascending: false });
 
     if (error) {
-      console.warn("Falling back to local projects due to Supabase error", error);
+      console.warn(
+        "Falling back to local projects due to Supabase error",
+        error
+      );
       return readLocalProjects();
     }
 
@@ -94,7 +101,10 @@ export const fetchProjects = async (): Promise<Planet[]> => {
     const projects = data.map(toProject);
     return mergeProjects(Planets, projects);
   } catch (error) {
-    console.warn("Falling back to local projects due to Supabase failure", error);
+    console.warn(
+      "Falling back to local projects due to Supabase failure",
+      error
+    );
     return readLocalProjects();
   }
 };
@@ -140,6 +150,9 @@ export const saveProject = async (
     return { success: true };
   } catch (error) {
     console.error("Failed to save project locally", error);
-    return { success: false, message: "Unable to write project to local store." };
+    return {
+      success: false,
+      message: "Unable to write project to local store.",
+    };
   }
 };
