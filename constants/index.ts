@@ -334,7 +334,7 @@ export const Planets: Planet[] = [
   {
     id: "insuredspeaks",
     name: "Insured Speaks",
-    link: "https://inspuredspeaks.online",
+    link: "https://www.insuredspeaks.online/",
     remark: "",
     description:
       "Your AI-powered assistant for managing health insurance with ease—simplifying policies, support, and recommendations. Worked as freelancer for this project. Mainly worked on the frontend.",
