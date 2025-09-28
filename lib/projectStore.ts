@@ -98,8 +98,11 @@ export const fetchProjects = async (): Promise<Planet[]> => {
       return Planets;
     }
 
-    const projects = data.map(toProject);
-    return mergeProjects(Planets, projects);
+    const fetchedProjects = data.map(toProject);
+    const localProjects = Planets.filter(
+      (local) => !fetchedProjects.some((fetched) => fetched.id === local.id)
+    );
+    return [...fetchedProjects, ...localProjects];
   } catch (error) {
     console.warn(
       "Falling back to local projects due to Supabase failure",

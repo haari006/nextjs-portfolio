@@ -1,13 +1,20 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 export const hasSupabaseReadConfig = Boolean(supabaseUrl && supabaseAnonKey);
 export const hasSupabaseWriteConfig = Boolean(
   supabaseUrl && supabaseServiceRoleKey
 );
+
+console.log("Supabase read config:", {
+  hasSupabaseReadConfig,
+});
+console.log("Supabase write config:", {
+  hasSupabaseWriteConfig,
+});
 
 type SupabaseModule = typeof import("@supabase/supabase-js");
 

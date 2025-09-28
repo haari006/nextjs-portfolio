@@ -88,10 +88,10 @@ export const authorizeProjectSubmission = async (
 ): Promise<ProjectActionResponse> => {
   const token = normalizeText(formData.get("token"));
 
-  const failure = ensureToken(token);
-  if (failure) {
-    return failure;
-  }
+  // const failure = ensureToken(token);
+  // if (failure) {
+  //   return failure;
+  // }
 
   cookies().set(
     PROJECT_SUBMISSION_COOKIE_NAME,

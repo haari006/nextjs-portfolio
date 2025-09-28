@@ -273,155 +273,25 @@ export const AI_skill = [
 
 export const Planets: Planet[] = [
   {
-    id: "pystorm-saas",
-    name: "Pystorm Saas App",
-    link: "https://pystorm.com",
-    remark:
-      "I worked on this project as a full stack developer. I was responsible for the frontend and backend of the project. I was also responsible for the design and architecture of the project. This project was made for the Start-Up company Pydantic Sdn Bhd.",
-    description:
-      "Pystorm is a SaaS app which offers a user-friendly platform tailored for small businesses to simplify data management and visualization. It offers custom dashboards, over 50 ready-to-use dashboard templates, and Excel download options, all with secure data encryption. Users can combine Excel data into one dashboard, get priority customer support, and export PDF reports. The site makes it easy to turn spreadsheets into dynamic business dashboards, leveraging Excel for easy data management and visualization.",
-    images: [
-      {
-        src: "/pystorm1.webp",
-        width: 100,
-        height: 100,
-      },
-      {
-        src: "/pystorm2.webp",
-        width: 100,
-        height: 100,
-      },
-      {
-        src: "/pystorm3.webp",
-        width: 100,
-        height: 100,
-      },
-    ],
-    frameworks: [
-      {
-        name: "React Js",
-        Image: "/react.png",
-        width: 80,
-        height: 80,
-      },
-      {
-        name: "Express js",
-        Image: "/express.png",
-        width: 80,
-        height: 80,
-      },
-      {
-        name: "Firebase",
-        Image: "/Firebase.png",
-        width: 55,
-        height: 55,
-      },
-      {
-        name: "Stripe",
-        Image: "/stripe.svg",
-        width: 70,
-        height: 70,
-      },
-    ],
-    cloud: [
-      {
-        name: "Vercel",
-        Image: "/vercel.svg",
-        width: 70,
-        height: 70,
-      },
-      {
-        name: "Azure Container",
-        Image: "/microsoft_azure-icon.svg",
-        width: 50,
-        height: 50,
-      },
-    ],
-  },
-  {
-    id: "pystorm-dashboard",
-    name: "Pystorm Project Based Dashboard",
-    link: "https://demo.pystorm.info",
-    remark:
-      "I worked on this project as a frontend developer. Initially, it was developed using React-vite, but it has since been rebuilt using Next.js 14, eliminating the need for a separate backend. This project was created for the startup company, Pydantic Sdn Bhd.",
-    description:
-      "This is a web app that supports multi-tenancy, allowing users to view embedded dashboards. It was developed for SME organizations to visualize their data and assign dashboards to their members. The web app also features role-based access control to manage users and permissions. This web app can only be accessed by registered users.",
-    images: [
-      {
-        src: "/pystorm-dashboard1.jpeg",
-        width: 100,
-        height: 100,
-      },
-      {
-        src: "/pystorm-dashboard2.jpeg",
-        width: 100,
-        height: 100,
-      },
-      {
-        src: "/pystorm-dashboard3.jpeg",
-        width: 100,
-        height: 100,
-      },
-      {
-        src: "/pystorm-dashboard4.jpeg",
-        width: 100,
-        height: 100,
-      },
-      {
-        src: "/pystorm-dashboard5.jpeg",
-        width: 100,
-        height: 100,
-      },
-    ],
-    frameworks: [
-      {
-        name: "NextJS 14",
-        Image: "/next.png",
-        width: 80,
-        height: 80,
-      },
-      {
-        name: "Firebase",
-        Image: "/Firebase.png",
-        width: 55,
-        height: 55,
-      },
-      {
-        name: "Google Cloud Platform",
-        Image: "/google_cloud.svg",
-        width: 70,
-        height: 70,
-      },
-    ],
-    cloud: [
-      {
-        name: "Vercel",
-        Image: "/vercel.svg",
-        width: 70,
-        height: 70,
-      },
-    ],
-  },
-  {
-    id: "insuredspeaks",
-    name: "Insured Speaks",
-    link: "https://inspuredspeaks.online",
+    id: "worldExpo-my",
+    name: "World Expo 2025 Monitoring System",
+    link: "#",
     remark: "",
     description:
-      "Your AI-powered assistant for managing health insurance with ease—simplifying policies, support, and recommendations. Worked as freelancer for this project. Mainly worked on the frontend.",
+      "A comprehensive monitoring system for the World Expo 2025, designed to track and their reach with the advertisment campaigns. This project was developed as a part of freelance work. I was responsible for the frontend development, ensuring a seamless user experience and plugging the supabase RPC endpoints.",
     images: [
       {
-        src: "/insuredspeaks1.png",
+        src: "/worldExpo1.png",
         width: 100,
         height: 100,
       },
       {
-        src: "/insuredspeaks2.png",
+        src: "/worldExpo2.png",
         width: 100,
         height: 100,
       },
       {
-        src: "/insuredspeaks3.png",
+        src: "/worldExpo3.png",
         width: 100,
         height: 100,
       },
@@ -462,25 +332,25 @@ export const Planets: Planet[] = [
     ],
   },
   {
-    id: "worldExpo-my",
-    name: "World Expo 2025 Monitoring System",
-    link: "#",
+    id: "insuredspeaks",
+    name: "Insured Speaks",
+    link: "https://inspuredspeaks.online",
     remark: "",
     description:
-      "A comprehensive monitoring system for the World Expo 2025, designed to track and their reach with the advertisment campaigns. This project was developed as a part of freelance work. I was responsible for the frontend development, ensuring a seamless user experience and plugging the supabase RPC endpoints.",
+      "Your AI-powered assistant for managing health insurance with ease—simplifying policies, support, and recommendations. Worked as freelancer for this project. Mainly worked on the frontend.",
     images: [
       {
-        src: "/worldExpo1.png",
+        src: "/insuredspeaks1.png",
         width: 100,
         height: 100,
       },
       {
-        src: "/worldExpo2.png",
+        src: "/insuredspeaks2.png",
         width: 100,
         height: 100,
       },
       {
-        src: "/worldExpo3.png",
+        src: "/insuredspeaks3.png",
         width: 100,
         height: 100,
       },
