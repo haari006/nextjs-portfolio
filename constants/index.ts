@@ -282,18 +282,18 @@ export const Planets: Planet[] = [
     images: [
       {
         src: "/worldExpo1.png",
-        width: 100,
-        height: 100,
+        width: 1200,
+        height: 800,
       },
       {
         src: "/worldExpo2.png",
-        width: 100,
-        height: 100,
+        width: 1200,
+        height: 800,
       },
       {
         src: "/worldExpo3.png",
-        width: 100,
-        height: 100,
+        width: 1200,
+        height: 800,
       },
     ],
     frameworks: [
@@ -340,19 +340,19 @@ export const Planets: Planet[] = [
       "Your AI-powered assistant for managing health insurance with ease—simplifying policies, support, and recommendations. Worked as freelancer for this project. Mainly worked on the frontend.",
     images: [
       {
-        src: "/insuredspeaks1.png",
-        width: 100,
-        height: 100,
+        src: "/insuredspeaks1.jpg",
+        width: 1200,
+        height: 800,
       },
       {
-        src: "/insuredspeaks2.png",
-        width: 100,
-        height: 100,
+        src: "/insuredspeaks2.jpg",
+        width: 1200,
+        height: 800,
       },
       {
-        src: "/insuredspeaks3.png",
-        width: 100,
-        height: 100,
+        src: "/insuredspeaks3.jpg",
+        width: 1200,
+        height: 800,
       },
     ],
     frameworks: [
@@ -400,18 +400,18 @@ export const Planets: Planet[] = [
     images: [
       {
         src: "/lifepath1.png",
-        width: 100,
-        height: 100,
+        width: 1200,
+        height: 800,
       },
       {
         src: "/lifepath2.png",
-        width: 100,
-        height: 100,
+        width: 1200,
+        height: 800,
       },
       {
         src: "/lifepath3.png",
-        width: 100,
-        height: 100,
+        width: 1200,
+        height: 800,
       },
     ],
     frameworks: [
@@ -453,8 +453,8 @@ export const Planets: Planet[] = [
     images: [
       {
         src: "/maths-generator.jpeg",
-        width: 100,
-        height: 100,
+        width: 1200,
+        height: 800,
       },
     ],
     frameworks: [
@@ -489,18 +489,18 @@ export const Planets: Planet[] = [
     images: [
       {
         src: "/jp1.PNG",
-        width: 100,
-        height: 100,
+        width: 1200,
+        height: 800,
       },
       {
         src: "/jp2.PNG",
-        width: 100,
-        height: 100,
+        width: 1200,
+        height: 800,
       },
       {
         src: "/jp3.jpeg",
-        width: 100,
-        height: 100,
+        width: 1200,
+        height: 800,
       },
     ],
     frameworks: [

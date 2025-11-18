@@ -1,8 +1,8 @@
 "use client";
 
+import type { ProjectImage } from "@/constants/type";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import type { ProjectImage } from "@/constants/type";
 
 type CarouselImage = ProjectImage | string;
 
@@ -65,6 +65,8 @@ const PlanetCarousel = ({ images = [] }: PlanetCarouselProps) => {
                 onLoad={() => setLoading(false)}
                 width={img.width || 1200}
                 height={img.height || 800}
+                priority
+                quality={100}
               />
             ))}
           </div>

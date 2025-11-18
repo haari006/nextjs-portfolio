@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
 
 interface Props {
   src: string;
@@ -29,6 +28,7 @@ const ProjectCard = ({ src, title, description, link }: Props) => {
           height={280}
           className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
           loading="lazy"
+          quality={100}
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
       </div>
